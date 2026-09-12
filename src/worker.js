@@ -32,7 +32,7 @@ async function buildAvailability(env, origin) {
   try { feeds = JSON.parse(env.ICAL_FEEDS); } catch (e) { feeds = {}; }
   const today = isoDate(new Date());
   const horizon = isoDate(new Date(Date.now() + HORIZON_DAYS * 864e5));
-  const rooms = {};
+  const results = {};
   await Promise.all(ROOMS.map(async (slug, i) => {
     const urls = feeds[slug] || [];
     const booked = new Set();
@@ -45,12 +45,14 @@ async function buildAvailability(env, origin) {
         ok++;
       } catch (e) { /* feed failed, ignore */ }
     }));
-    rooms[slug] = {
+    results[slug] = {
       name: "Suite " + (i + 1),
       booked: [...booked].filter((d) => d >= today && d <= horizon).sort(),
       feeds: urls.length, feedsOk: ok,
     };
   }));
+  const rooms = {};
+  for (const slug of ROOMS) rooms[slug] = results[slug];
   const body = JSON.stringify({ updated: new Date().toISOString().slice(0, 16) + "Z", source: "Booking.com, Airbnb, Agoda, Expedia calendars", rooms }, null, 1);
   return new Response(body, { headers: { "content-type": "application/json; charset=utf-8", "cache-control": "public, max-age=" + CACHE_SECONDS, "access-control-allow-origin": origin } });
 }
