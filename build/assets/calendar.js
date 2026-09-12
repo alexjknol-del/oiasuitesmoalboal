@@ -21,7 +21,7 @@
     var h='<thead><tr><th>Suite</th>';
     for(var d=1;d<=days;d++){var dt=new Date(y,m,d),wk=dt.getDay()===0||dt.getDay()===6;h+='<th class="day'+(wk?' wk':'')+'" title="'+fmt(dt)+'">'+d+'</th>';}
     h+='</tr></thead><tbody>';
-    Object.keys(data.rooms).forEach(function(slug){
+    Object.keys(data.rooms).sort().forEach(function(slug){
       var r=data.rooms[slug];
       h+='<tr><th class="room"><button type="button" data-room="'+slug+'">'+r.name+'</button></th>';
       for(var d=1;d<=days;d++){
