@@ -1,0 +1,30 @@
+{
+ "updated": "2026-09-12T09:50Z",
+ "source": "Booking.com, Airbnb, Agoda, Expedia calendars",
+ "rooms": {
+  "suite-1": {
+   "name": "Suite 1",
+   "booked": []
+  },
+  "suite-2": {
+   "name": "Suite 2",
+   "booked": []
+  },
+  "suite-3": {
+   "name": "Suite 3",
+   "booked": []
+  },
+  "suite-4": {
+   "name": "Suite 4",
+   "booked": []
+  },
+  "suite-5": {
+   "name": "Suite 5",
+   "booked": []
+  },
+  "suite-6": {
+   "name": "Suite 6",
+   "booked": []
+  }
+ }
+}
