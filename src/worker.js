@@ -6,6 +6,7 @@
  *     {"suite-1":["https://...ics", ...], "suite-2":[...], ...}
  *   Result is cached for 30 minutes. Without the secret the static file is served.
  */
+const CANONICAL_HOST = "oiasuitesmoalboal.com";
 const ROOMS = ["suite-1", "suite-2", "suite-3", "suite-4", "suite-5", "suite-6"];
 const CACHE_SECONDS = 1800;
 const HORIZON_DAYS = 550;
@@ -13,6 +14,11 @@ const HORIZON_DAYS = 550;
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    // Canonical host: redirect www and workers.dev to the main domain once the zone is active
+    if (url.hostname !== CANONICAL_HOST && (url.hostname === "www." + CANONICAL_HOST || url.hostname.endsWith(".workers.dev"))) {
+      url.hostname = CANONICAL_HOST;
+      return Response.redirect(url.toString(), 301);
+    }
     if (url.pathname === "/data/availability.json" && env.ICAL_FEEDS) {
       const cache = caches.default;
       const key = new Request(url.origin + "/data/availability.json", { method: "GET" });
