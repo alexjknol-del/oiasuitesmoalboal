@@ -133,7 +133,7 @@ FAQ = [
         ("Is there a swimming pool?",
          "A swimming pool is being built next to the house from 14 September 2026. Construction takes place on working days from 8:00 to 11:00 AM and 2:00 to 5:00 PM, with a quiet break in between and no work in the evening or at weekends. Guests who are sensitive to daytime noise can ask the team for the quietest suite."),
         ("Is laundry service available?",
-         "Yes. Laundry is collected at the house and returned the next day, through the sister business Laundry Lounge Cebu."),
+         "Yes. OIA Suites runs its own laundry, Laundry Lounge Cebu in Moalboal town. Laundry is collected at the house and returned the next day, washed, dried and folded, for PHP 190 per load of up to 9 kg. See the <a href=\"/laundry-moalboal/\">laundry page</a>."),
     ]),
     ("Location and getting around", [
         ("Where exactly is OIA Suites?",
@@ -156,3 +156,9 @@ FAQ = [
          "Long-stay rates are quoted individually. Send a request through the calendar and mention the intended length of stay."),
     ]),
 ]
+
+# Own laundry business
+LAUNDRY_NAME = "Laundry Lounge Cebu"
+LAUNDRY_URL = "https://laundryloungecebu.ph/"
+LAUNDRY_PHONE = "(032) 421-9766"
+LAUNDRY_PHONE_TEL = "+63324219766"

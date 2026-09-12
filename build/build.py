@@ -8,7 +8,7 @@ TODAY = datetime.date.today().isoformat()
 
 NAV = [
     ("/", "Home"), ("/rooms/", "Rooms"), ("/availability/", "Availability"),
-    ("/accommodation-for-digital-nomads/", "Digital Nomads"), ("/services/", "Services & Tours"),
+    ("/accommodation-for-digital-nomads/", "Digital Nomads"), ("/services/", "Services & Tours"), ("/laundry-moalboal/", "Laundry"),
     ("/faq/", "FAQ"), ("/contact/", "Contact"),
 ]
 
@@ -219,7 +219,7 @@ def page_home():
       <li><strong>1.5 h</strong> Oslob whale sharks</li>
       <li><strong>3 h</strong> Cebu City and Mactan-Cebu International Airport</li>
     </ul>
-    <p><a class="btn btn-ghost" href="/services/">Tours, transfers and scooter rental</a></p>
+    <p><a class="btn btn-ghost" href="/services/">Tours, transfers and scooter rental</a> <a class="btn btn-ghost" href="/laundry-moalboal/">Own laundry service</a></p>
   </div>
   <div>
     {img("beach-starfish", "Starfish in the shallow water at the beach near OIA Suites Moalboal")}
@@ -424,7 +424,7 @@ def page_services():
         ("Whale shark watching in Oslob", "PHP 1,800 to 3,500 per person", "Joiner van PHP 1,800 (pick-up 3:20 AM), private car PHP 2,000 (pick-up 5:00 AM), by scuba PHP 3,500. Includes pick-up and drop-off, entrance fee, boat, gear and guide."),
         ("Oslob private tour", "PHP 4,000 per person", "Whale sharks, Tumalog Falls and Sumilon Island in one day. Includes transport, guides and entrance fees. Private car only (without guide and fees) PHP 3,000 for up to 4 passengers."),
         ("Osmeña Peak and Casino Peak trekking", "PHP 1,800 per person", "About 5 hours in total to the highest point of Cebu and the neighbouring Casino Peak. Includes transport, entrance fees and guide. Private car only PHP 2,500 for up to 4 passengers."),
-        ("Laundry", "on request", "Collected at the house and returned the next day through Laundry Lounge Cebu, the sister business in Moalboal."),
+        ("Laundry", "PHP 190 per load", "Collected at the house and returned the next day, washed, dried and folded, through Laundry Lounge Cebu, the own laundry of OIA Suites in Moalboal town. Up to 9 kg per load."),
     ]
     cards = "".join(f'<div class="fact"><h3>{esc(n)}</h3><p class="price">{esc(p)}</p><p>{esc(d)}</p></div>' for n, p, d in offers)
     schema = {"@context": "https://schema.org", "@type": "OfferCatalog", "name": "Services and tours at OIA Suites Moalboal", "url": BASE + path,
@@ -439,11 +439,72 @@ def page_services():
   <p><strong>Address:</strong> {ADDRESS}, just before Turtle Bay Dive Resort. <a href="{MAPS}" rel="noopener" target="_blank">Open in Google Maps</a>.</p></div>
   {img("exterior-day", "OIA Suites seen from the lane, with the turquoise stairwell and balconies")}
 </section>
+<section class="wrap"><h2>Own laundry</h2><p>OIA Suites runs its own laundry in Moalboal town, Laundry Lounge Cebu. Linen and towels are washed there, and guests can hand in laundry at the counter. Details, rates and photos on the <a href="/laundry-moalboal/">laundry page</a>.</p></section>
 <section class="wrap cta-box"><h2>Book tours together with the room</h2><p>Mention the tours of interest in the booking request and the team prepares them for arrival.</p><a class="btn btn-primary btn-lg" href="/availability/">Check availability</a></section>
 """
     write(path, layout(path, "Services and tours: breakfast, scooter rental, transfers, Kawasan, Oslob | OIA Suites Moalboal",
         "Breakfast for PHP 250, scooters from PHP 300 per day, sardine run snorkelling PHP 500, Badian canyoneering PHP 2,100, Oslob whale sharks from PHP 1,800, transfers and laundry at OIA Suites Moalboal.",
         body, schemas=[schema], og_image="/images/exterior-day.webp", crumbs=[("/", "Home"), (path, "Services & Tours")]))
+
+def page_laundry():
+    path = "/laundry-moalboal/"
+    schema = {"@context": "https://schema.org", "@type": "WebPage", "@id": BASE + path + "#webpage", "url": BASE + path,
+              "name": "Laundry service in Moalboal for guests of OIA Suites", "about": {"@id": BASE + "/#hotel"}, "isPartOf": {"@id": BASE + "/#website"},
+              "mentions": {"@type": "LocalBusiness", "@id": LAUNDRY_URL + "#business", "name": LAUNDRY_NAME, "url": LAUNDRY_URL, "telephone": LAUNDRY_PHONE,
+                           "address": {"@type": "PostalAddress", "streetAddress": "Calumpang Road, Lot 502, Poblacion West", "addressLocality": "Moalboal", "addressRegion": "Cebu", "postalCode": "6032", "addressCountry": "PH"},
+                           "openingHours": "Mo-Su 08:00-20:00", "parentOrganization": {"@id": BASE + "/#hotel"}}}
+    offer = {"@context": "https://schema.org", "@type": "Offer", "name": "Laundry for guests: wash, dry and fold", "url": BASE + path, "price": "190", "priceCurrency": "PHP",
+             "description": "Wash, dry and fold per load of up to 9 kg, collected at OIA Suites and returned the next day.", "seller": {"@id": BASE + "/#hotel"}}
+    body = f"""
+<section class="wrap page-head">
+  <p class="eyebrow">Own laundry, clean linen</p>
+  <h1>Laundry in Moalboal: OIA Suites runs its own laundry</h1>
+  <p class="lead">OIA Suites Moalboal is one of the few places to stay in Moalboal with its own laundry business. Every sheet, pillowcase and towel in the six suites is washed at <a href="{LAUNDRY_URL}" rel="noopener" target="_blank">{LAUNDRY_NAME}</a>, the sister business in Moalboal town. Guests can hand in their own laundry at the counter and get it back washed, dried and folded the next day.</p>
+  <div class="hero-actions"><a class="btn btn-primary btn-lg" href="/availability/">Check availability</a><a class="btn btn-ghost btn-lg" href="#guests">Laundry for guests</a></div>
+</section>
+
+<section class="wrap two-col">
+  {img("laundry-machines", "Row of stacked commercial washers and dryers at Laundry Lounge Cebu in Moalboal")}
+  <div>
+    <h2>Why an own laundry matters for a guesthouse</h2>
+    <p>Most small hotels in Moalboal send their linen to a third party or wash it in a household machine. OIA Suites controls the whole cycle itself. Bed linen and towels go through commercial machines imported from Germany, with German detergents, built for hotel volumes rather than a family wash. It shows: cleanliness scores at OIA Suites sit between 9.7 and 10 on Booking.com, Airbnb and Agoda.</p>
+    <p>It also means fresh linen is never the bottleneck. On changeover days the laundry runs the same day, so a suite can be turned around without cutting corners, and extra towels or a mid-stay change of sheets are a matter of asking.</p>
+  </div>
+</section>
+
+<section class="wrap facts">
+  <h2>The facts</h2>
+  <div class="grid-3 fact-cards">
+    <div class="fact"><h3>Commercial machines</h3><p>Stacked washer and dryer units imported from Germany, with imported detergents. One load takes up to 9 kilos.</p></div>
+    <div class="fact"><h3>Open every day</h3><p>{LAUNDRY_NAME} is open Monday to Sunday from 8:00 AM to 8:00 PM at Calumpang Road, Poblacion West, Moalboal.</p></div>
+    <div class="fact"><h3>Same-day turnaround</h3><p>Wash, dry and fold usually takes about two hours at the shop. Laundry handed in at OIA Suites is back the next day.</p></div>
+    <div class="fact"><h3>Fixed price per load</h3><p>Wash, dry and fold PHP 190 per load of up to 9 kg. Wash and dry only PHP 180. Self-service at the shop PHP 65 per machine.</p></div>
+    <div class="fact"><h3>Collected at the house</h3><p>No need to find a laundromat or carry a bag of clothes on a scooter. Hand the laundry to the team at the counter and it comes back folded.</p></div>
+    <div class="fact"><h3>Trusted by the town</h3><p>{LAUNDRY_NAME} serves households, resorts and partner hotels in Moalboal and picks up in Badian, Alegria and Malabuyoc as well.</p></div>
+  </div>
+</section>
+
+<section class="wrap two-col" id="guests">
+  <div>
+    <h2>Laundry for guests</h2>
+    <p>Hand in a bag of laundry at the counter before noon and it is back the next day, washed, dried and folded. The rate is the shop rate of PHP 190 per load of up to 9 kilos, paid at check-out or directly at collection. Delicate items and anything that should not go in the dryer can be marked; the team passes it on.</p>
+    <p>For longer stays this adds up. Digital nomads and travellers staying a week or more can travel with a small backpack and have laundry done once or twice a week for less than the price of a meal on Panagsama. Divers get salty wetsuit shirts and towels back dry the next morning.</p>
+    <h2>Doing it yourself</h2>
+    <p>Anyone who prefers self-service can bring laundry to the shop in Moalboal town, use a machine for PHP 65 and wait with free WiFi and a drink. The shop also does printing and copying, which is handy for boarding passes and permits.</p>
+  </div>
+  <div class="intro-imgs">{img("laundry-folding", "Staff folding and sorting clean laundry at Laundry Lounge Cebu")}{img("laundry-sorting", "Freshly washed clothes being folded on the counter at the laundry shop in Moalboal")}</div>
+</section>
+
+<section class="wrap">
+  <h2>Contact the laundry directly</h2>
+  <p>{LAUNDRY_NAME}, Calumpang Road, Lot 502, Poblacion West, Moalboal, Cebu 6032. Phone <a href="tel:{LAUNDRY_PHONE_TEL}">{LAUNDRY_PHONE}</a>. Website <a href="{LAUNDRY_URL}" rel="noopener" target="_blank">laundryloungecebu.ph</a>, rates at <a href="{LAUNDRY_URL}rates/" rel="noopener" target="_blank">laundryloungecebu.ph/rates/</a>. Guests of OIA Suites do not need to contact the shop: the team at the house handles it.</p>
+</section>
+
+<section class="wrap cta-box"><h2>Stay where the linen is always fresh</h2><p>Pick dates in the calendar and mention any laundry needs in the message.</p><a class="btn btn-primary btn-lg" href="/availability/">Check availability</a></section>
+"""
+    write(path, layout(path, "Laundry in Moalboal: own laundry service for guests | OIA Suites Moalboal",
+        "OIA Suites Moalboal runs its own laundry, Laundry Lounge Cebu. Fresh linen washed in commercial German machines, and guest laundry washed, dried and folded for PHP 190 per load, back the next day.",
+        body, schemas=[schema, offer], og_image="/images/laundry-machines.webp", crumbs=[("/", "Home"), (path, "Laundry")]))
 
 def page_faq():
     path = "/faq/"
@@ -503,7 +564,7 @@ def page_404():
     write("/404.html", html_)
 
 def sitemap():
-    urls = ["/", "/rooms/", "/availability/", "/accommodation-for-digital-nomads/", "/services/", "/faq/", "/contact/"] + [f"/rooms/{r['slug']}/" for r in ROOMS]
+    urls = ["/", "/rooms/", "/availability/", "/accommodation-for-digital-nomads/", "/services/", "/laundry-moalboal/", "/faq/", "/contact/"] + [f"/rooms/{r['slug']}/" for r in ROOMS]
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(
         f"  <url><loc>{BASE}{u}</loc><lastmod>{TODAY}</lastmod></url>\n" for u in urls) + "</urlset>\n"
     write("/sitemap.xml", xml)
@@ -519,14 +580,14 @@ def availability_seed():
     json.dump(data, open(p, "w"), indent=1)
 
 def main():
-    for d in ["rooms", "availability", "accommodation-for-digital-nomads", "services", "faq", "contact", "request-sent"]:
+    for d in ["rooms", "availability", "accommodation-for-digital-nomads", "services", "laundry-moalboal", "faq", "contact", "request-sent"]:
         shutil.rmtree(os.path.join(OUT, d), ignore_errors=True)
     os.makedirs(os.path.join(OUT, "assets"), exist_ok=True)
     for a in ["style.css", "site.js", "calendar.js"]:
         shutil.copy(os.path.join(os.path.dirname(__file__), "assets", a), os.path.join(OUT, "assets", a))
     page_home(); page_rooms()
     for r in ROOMS: page_room(r)
-    page_availability(); page_nomads(); page_services(); page_faq(); page_contact(); page_sent(); page_404(); sitemap(); availability_seed()
+    page_availability(); page_nomads(); page_services(); page_laundry(); page_faq(); page_contact(); page_sent(); page_404(); sitemap(); availability_seed()
     print("built", TODAY)
 
 if __name__ == "__main__":
