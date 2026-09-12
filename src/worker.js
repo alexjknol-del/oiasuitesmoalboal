@@ -19,6 +19,11 @@ export default {
       url.hostname = CANONICAL_HOST;
       return Response.redirect(url.toString(), 301);
     }
+    // Alias without hyphen
+    if (/^\/accommodation-for-digitalnomads\/?$/.test(url.pathname)) {
+      url.pathname = "/accommodation-for-digital-nomads/";
+      return Response.redirect(url.toString(), 301);
+    }
     if (url.pathname === "/data/availability.json" && env.ICAL_FEEDS) {
       const cache = caches.default;
       const key = new Request(url.origin + "/data/availability.json", { method: "GET" });
