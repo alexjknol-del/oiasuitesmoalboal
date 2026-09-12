@@ -85,7 +85,7 @@
     var q=new URLSearchParams(location.search).get('room');
     sel.room=(q&&data.rooms[q])?q:Object.keys(data.rooms)[0];
     var upd=data.updated?new Date(data.updated):null;
-    $('avail-updated').textContent='Availability last updated '+(upd?upd.toLocaleString('en-GB',{day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'}):'today')+' from the booking platform calendars. Bookings made on the platforms in the meantime are picked up at the next daily update, which is why every request is checked by the team before confirmation.';
+    $('avail-updated').textContent='Availability last updated '+(upd?upd.toLocaleString('en-GB',{day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'}):'today')+' from the booking platform calendars. Bookings made on the platforms in the meantime show up within 30 minutes, which is why every request is checked by the team before confirmation.';
     renderOverview();renderGrid();
     $('prev-month').addEventListener('click',function(){view=new Date(view.getFullYear(),view.getMonth()-1,1);renderOverview();renderGrid();});
     $('next-month').addEventListener('click',function(){view=new Date(view.getFullYear(),view.getMonth()+1,1);renderOverview();renderGrid();});

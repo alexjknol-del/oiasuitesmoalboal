@@ -249,7 +249,7 @@ def page_rooms():
 <section class="wrap"><h2>Photos of the house</h2><div class="gallery">
 {img("kitchen", "Shared kitchen with granite counters and pendant lights")}{img("living-room-2", "Living room with sofas, dining table and staircase")}{img("stairs", "Hallway on the first floor with the six suite doors")}{img("kitchen-island", "Kitchen island with bar stools")}{img("balcony-chairs", "Balcony with two chairs among the palms")}{img("grill", "Outdoor grill for guests")}{img("exterior-front", "Front of the house with glass sliding doors and balconies")}{img("beach-shore", "Shoreline of the small beach two minutes from the house")}
 </div></section>
-<section class="wrap cta-box"><h2>Check dates for a suite</h2><p>The calendar shows live availability for all six rooms, updated daily from the booking platforms.</p><a class="btn btn-primary btn-lg" href="/availability/">Open the calendar</a></section>
+<section class="wrap cta-box"><h2>Check dates for a suite</h2><p>The calendar shows live availability for all six rooms, refreshed every 30 minutes from the booking platforms.</p><a class="btn btn-primary btn-lg" href="/availability/">Open the calendar</a></section>
 """
     write("/rooms/", layout("/rooms/", "Rooms | Six suites with king-size bed, balcony and desk | OIA Suites Moalboal",
         "Six 24-25 m² suites with king-size bed, private hot-and-cold shower, air conditioning, work desk, smart TV and balcony. Shared kitchen, free parking. From about PHP 1,500 per night.",
@@ -296,7 +296,7 @@ def page_availability():
     room_opts = "".join(f'<option value="{r["slug"]}">{r["name"]} ({r["size"]} m², up to {r["guests"]} guests)</option>' for r in ROOMS)
     body = f"""
 <section class="wrap page-head"><h1>Availability and booking requests</h1>
-<p class="lead">The calendar below shows which of the six suites are free on which nights. It is refreshed every day from the calendars on Booking.com, Airbnb, Agoda and Expedia. Choose a suite, click a check-in and a check-out date, and send the request. <strong>A request is not yet a confirmed booking</strong>: the team checks it and confirms by e-mail or WhatsApp, usually within 24 hours. No payment is due until then.</p>
+<p class="lead">The calendar below shows which of the six suites are free on which nights. It is refreshed every 30 minutes from the booking calendars of the platforms the house is listed on. Choose a suite, click a check-in and a check-out date, and send the request. <strong>A request is not yet a confirmed booking</strong>: the team checks it and confirms by e-mail or WhatsApp, usually within 24 hours. No payment is due until then.</p>
 <p class="meta" id="avail-updated">Loading availability…</p></section>
 
 <section class="wrap avail">
@@ -343,7 +343,7 @@ def page_availability():
 <script src="/assets/calendar.js" defer></script>
 """
     write("/availability/", layout("/availability/", "Availability calendar and booking request | OIA Suites Moalboal",
-        "Live availability for all six suites at OIA Suites Moalboal, updated daily from Booking.com, Airbnb, Agoda and Expedia. Send a booking request; the team confirms within 24 hours.",
+        "Live availability for all six suites at OIA Suites Moalboal, refreshed every 30 minutes from the booking platform calendars. Send a booking request; the team confirms within 24 hours.",
         body, crumbs=[("/", "Home"), ("/availability/", "Availability")]))
 
 def page_nomads():
