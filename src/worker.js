@@ -4,7 +4,8 @@
  * - /data/availability.json is generated live from the iCal feeds of the
  *   booking platforms when the secret ICAL_FEEDS is set:
  *     {"suite-1":["https://...ics", ...], "suite-2":[...], ...}
- *   Result is cached for 30 minutes. Without the secret the static file is served.
+ *   Extra secrets ICAL_FEEDS_BOOKING and ICAL_FEEDS_EXTRA use the same format and are merged.
+ *   Result is cached for 30 minutes. Without any secret the static file is served.
  */
 const CANONICAL_HOST = "oiasuitesmoalboal.com";
 const ROOMS = ["suite-1", "suite-2", "suite-3", "suite-4", "suite-5", "suite-6"];
@@ -24,7 +25,7 @@ export default {
       url.pathname = "/accommodation-for-digital-nomads/";
       return Response.redirect(url.toString(), 301);
     }
-    if (url.pathname === "/data/availability.json" && env.ICAL_FEEDS) {
+    if (url.pathname === "/data/availability.json" && (env.ICAL_FEEDS || env.ICAL_FEEDS_BOOKING)) {
       const cache = caches.default;
       const key = new Request(url.origin + "/data/availability.json", { method: "GET" });
       let res = await cache.match(key);
@@ -39,8 +40,15 @@ export default {
 };
 
 async function buildAvailability(env, origin) {
-  let feeds = {};
-  try { feeds = JSON.parse(env.ICAL_FEEDS); } catch (e) { feeds = {}; }
+  // Feeds come from one or more secrets (ICAL_FEEDS = Airbnb, ICAL_FEEDS_BOOKING = Booking.com, ...); merged per room
+  const feeds = {};
+  for (const name of ["ICAL_FEEDS", "ICAL_FEEDS_BOOKING", "ICAL_FEEDS_EXTRA"]) {
+    if (!env[name]) continue;
+    try {
+      const part = JSON.parse(env[name]);
+      for (const slug of ROOMS) feeds[slug] = (feeds[slug] || []).concat(part[slug] || []);
+    } catch (e) { /* invalid JSON in secret, ignore */ }
+  }
   const today = isoDate(new Date());
   const horizon = isoDate(new Date(Date.now() + HORIZON_DAYS * 864e5));
   const results = {};
