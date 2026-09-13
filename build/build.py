@@ -23,12 +23,12 @@ def hotel_schema():
         "@context": "https://schema.org", "@type": ["Hotel", "LodgingBusiness"],
         "@id": BASE + "/#hotel", "name": SITE_NAME, "alternateName": ["Oia Suites", "Oia Moalboal"],
         "url": BASE + "/", "logo": BASE + "/images/logo.png", "image": [BASE + "/images/exterior-side.webp", BASE + "/images/suite-1-a.webp", BASE + "/images/living-room.webp"],
-        "description": "Newly built guesthouse with six air-conditioned suites in Basdiot, Moalboal, Cebu. King-size beds, private bathrooms, balconies, work desks, 250 Mbps fiber internet with Starlink backup, shared kitchen, free parking, 2 minutes from a quiet beach.",
+        "description": "Newly built guesthouse with five air-conditioned suites in Basdiot, Moalboal, Cebu. King-size beds, private bathrooms, balconies, work desks, 250 Mbps fiber internet with Starlink backup, shared kitchen, free parking, 2 minutes from a quiet beach.",
         "telephone": PHONE_TEL, "email": EMAIL, "priceRange": "PHP 1,500 - PHP 2,500",
         "currenciesAccepted": "PHP", "paymentAccepted": "Cash, Credit Card, Debit Card",
         "address": {"@type": "PostalAddress", "streetAddress": "Oltmanns Road, Tongo, Basdiot", "addressLocality": "Moalboal", "addressRegion": "Cebu", "postalCode": "6032", "addressCountry": "PH"},
         "geo": {"@type": "GeoCoordinates", "latitude": LAT, "longitude": LNG},
-        "hasMap": MAPS, "checkinTime": "13:00", "checkoutTime": "12:00", "numberOfRooms": 6,
+        "hasMap": MAPS, "checkinTime": "13:00", "checkoutTime": "12:00", "numberOfRooms": 5,
         "petsAllowed": True, "smokingAllowed": False,
         "availableLanguage": ["English", "Filipino", "Cebuano", "Dutch", "German", "Spanish", "French"],
         "sameAs": [FB] + [p[1] for p in PLATFORMS],
@@ -118,7 +118,7 @@ def layout(path, title, desc, body, schemas=(), og_image="/images/og-image.jpg",
     </div>
     <div>
       <h2>Pages</h2>
-      <ul class="plain">{"".join(f'<li><a href="{u}">{n}</a></li>' for u, n in NAV)}<li><a href="/rooms/suite-1/">Suite 1</a> · <a href="/rooms/suite-2/">2</a> · <a href="/rooms/suite-3/">3</a> · <a href="/rooms/suite-4/">4</a> · <a href="/rooms/suite-5/">5</a> · <a href="/rooms/suite-6/">6</a></li></ul>
+      <ul class="plain">{"".join(f'<li><a href="{u}">{n}</a></li>' for u, n in NAV)}<li><a href="/rooms/suite-1/">Suite 1</a> · <a href="/rooms/suite-2/">2</a> · <a href="/rooms/suite-3/">3</a> · <a href="/rooms/suite-4/">4</a> · <a href="/rooms/suite-5/">5</a></li></ul>
     </div>
   </div>
   <div class="wrap copy"><p>© {datetime.date.today().year} {SITE_NAME}. Bookings through this website are requests and are confirmed by the team before they are final.</p></div>
@@ -157,7 +157,7 @@ def page_home():
   {img("exterior-side", "OIA Suites Moalboal, newly built two-storey guesthouse in Basdiot, Moalboal", "hero-img", lazy=False, sizes="100vw")}
   <div class="hero-text wrap">
     <p class="eyebrow">Basdiot · Moalboal · Cebu</p>
-    <h1>Six quiet suites, two minutes from the sea, built for people who stay a while</h1>
+    <h1>Five quiet suites, two minutes from the sea, built for people who stay a while</h1>
     <p class="lead">Newly built guesthouse with king-size beds, private bathrooms, balconies, 250 Mbps fiber internet with Starlink backup and a shared kitchen. Rated 9.4 on Booking.com and 4.96 on Airbnb.</p>
     <div class="hero-actions"><a class="btn btn-primary btn-lg" href="/availability/">Check availability</a><a class="btn btn-light btn-lg" href="/rooms/">See the rooms</a></div>
   </div>
@@ -170,10 +170,10 @@ def page_home():
 <section class="wrap intro-grid">
   <div>
     <h2>A small guesthouse in a quiet corner of Moalboal</h2>
-    <p>OIA Suites sits on Oltmanns Road in Tongo, Basdiot, a residential lane just before Turtle Bay Dive Resort. It is a two-storey house finished to European standards in 2025, with six guest suites upstairs and a large shared kitchen, dining and living area downstairs. A small beach with good snorkelling is a two-minute walk away; Panagsama Beach and the dive shops are 13 minutes on foot or five minutes by scooter.</p>
+    <p>OIA Suites sits on Oltmanns Road in Tongo, Basdiot, a residential lane just before Turtle Bay Dive Resort. It is a two-storey house finished to European standards in 2025, with five guest suites upstairs and a large shared kitchen, dining and living area downstairs. A small beach with good snorkelling is a two-minute walk away; Panagsama Beach and the dive shops are 13 minutes on foot or five minutes by scooter.</p>
     <p>The house is run on site by a small local team from 8:00 AM to 8:00 PM, with a family member reachable through the night. Guests can book tours, motorbikes, laundry and transfers at the counter, and every arriving guest is collected free of charge from Jollibee Moalboal or the bus stop.</p>
     <ul class="checks">
-      <li>Six suites of 24 to 25 m², each with king-size bed, en-suite bathroom, desk and balcony</li>
+      <li>Five suites of 24 to 25 m², each with king-size bed, en-suite bathroom, desk and balcony</li>
       <li>Globe fiber 250 Mbps plus Starlink Gen 3 backup, in every room</li>
       <li>Shared kitchen with ice-making fridge, espresso machine and grill</li>
       <li>Free parking, free drinking water, daily cleaning, pets welcome</li>
@@ -186,7 +186,7 @@ def page_home():
 </section>
 
 <section class="wrap">
-  <div class="section-head"><h2>The six suites</h2><p>All rooms are on the first floor and share the same standard: king-size bed, private hot-and-cold shower, air conditioning, work desk, smart TV and balcony. The differences are in the colours, the outlook and the number of guests.</p></div>
+  <div class="section-head"><h2>The five suites</h2><p>All rooms are on the first floor and share the same standard: king-size bed, private hot-and-cold shower, air conditioning, work desk, smart TV and balcony. The differences are in the colours, the outlook and the number of guests.</p></div>
   <div class="grid-3">{rooms}</div>
 </section>
 
@@ -233,26 +233,26 @@ def page_home():
 </section>
 """
     write("/", layout("/", "OIA Suites Moalboal | Guesthouse in Basdiot, Moalboal, Cebu",
-        "Six quiet suites with king-size beds, private bathrooms, balconies, 250 Mbps fiber internet and a shared kitchen, two minutes from the beach in Moalboal, Cebu. Rated 9.4 on Booking.com.",
+        "Five quiet suites with king-size beds, private bathrooms, balconies, 250 Mbps fiber internet and a shared kitchen, two minutes from the beach in Moalboal, Cebu. Rated 9.4 on Booking.com.",
         body))
 
 def page_rooms():
     rooms = "".join(room_card(r) for r in ROOMS)
     feats = "".join(f"<li>{esc(f)}</li>" for f in COMMON_ROOM_FEATURES)
     body = f"""
-<section class="wrap page-head"><h1>Rooms at OIA Suites Moalboal</h1><p class="lead">Six suites on the first floor of a newly built house. Each is 24 to 25 m² with a king-size bed, private bathroom with hot and cold shower, split-type air conditioning, work desk with office chair, smart TV with Netflix and a private balcony. Rates from roughly PHP 1,500 per night for two people.</p></section>
+<section class="wrap page-head"><h1>Rooms at OIA Suites Moalboal</h1><p class="lead">Five suites on the first floor of a newly built house. Each is 24 to 25 m² with a king-size bed, private bathroom with hot and cold shower, split-type air conditioning, work desk with office chair, smart TV with Netflix and a private balcony. Rates from roughly PHP 1,500 per night for two people.</p></section>
 <section class="wrap"><div class="grid-3">{rooms}</div></section>
 <section class="wrap two-col">
   <div><h2>In every suite</h2><ul class="checks">{feats}</ul></div>
   <div><h2>Shared by all guests</h2><ul class="checks"><li>Fully equipped kitchen with hob, microwave, espresso machine, drip coffee maker and utensils</li><li>Refrigerator with built-in ice maker</li><li>Dining area and living room with Smart UHD TV</li><li>Water dispensers on both floors</li><li>Outdoor grill</li><li>Free private parking</li><li>Luggage storage</li><li>Laundry service, motorbike rental and tour desk</li></ul></div>
 </section>
 <section class="wrap"><h2>Photos of the house</h2><div class="gallery">
-{img("kitchen", "Shared kitchen with granite counters and pendant lights")}{img("living-room-2", "Living room with sofas, dining table and staircase")}{img("stairs", "Hallway on the first floor with the six suite doors")}{img("kitchen-island", "Kitchen island with bar stools")}{img("balcony-chairs", "Balcony with two chairs among the palms")}{img("grill", "Outdoor grill for guests")}{img("exterior-front", "Front of the house with glass sliding doors and balconies")}{img("beach-shore", "Shoreline of the small beach two minutes from the house")}
+{img("kitchen", "Shared kitchen with granite counters and pendant lights")}{img("living-room-2", "Living room with sofas, dining table and staircase")}{img("stairs", "Hallway on the first floor with the suite doors")}{img("kitchen-island", "Kitchen island with bar stools")}{img("balcony-chairs", "Balcony with two chairs among the palms")}{img("grill", "Outdoor grill for guests")}{img("exterior-front", "Front of the house with glass sliding doors and balconies")}{img("beach-shore", "Shoreline of the small beach two minutes from the house")}
 </div></section>
-<section class="wrap cta-box"><h2>Check dates for a suite</h2><p>The calendar shows live availability for all six rooms, refreshed every 30 minutes from the booking platforms.</p><a class="btn btn-primary btn-lg" href="/availability/">Open the calendar</a></section>
+<section class="wrap cta-box"><h2>Check dates for a suite</h2><p>The calendar shows live availability for all five rooms, refreshed every 30 minutes from the booking platforms.</p><a class="btn btn-primary btn-lg" href="/availability/">Open the calendar</a></section>
 """
-    write("/rooms/", layout("/rooms/", "Rooms | Six suites with king-size bed, balcony and desk | OIA Suites Moalboal",
-        "Six 24-25 m² suites with king-size bed, private hot-and-cold shower, air conditioning, work desk, smart TV and balcony. Shared kitchen, free parking. From about PHP 1,500 per night.",
+    write("/rooms/", layout("/rooms/", "Rooms | Five suites with king-size bed, balcony and desk | OIA Suites Moalboal",
+        "Five 24-25 m² suites with king-size bed, private hot-and-cold shower, air conditioning, work desk, smart TV and balcony. Shared kitchen, free parking. From about PHP 1,500 per night.",
         body, crumbs=[("/", "Home"), ("/rooms/", "Rooms")]))
 
 def page_room(r):
@@ -296,7 +296,7 @@ def page_availability():
     room_opts = "".join(f'<option value="{r["slug"]}">{r["name"]} ({r["size"]} m², up to {r["guests"]} guests)</option>' for r in ROOMS)
     body = f"""
 <section class="wrap page-head"><h1>Availability and booking requests</h1>
-<p class="lead">The calendar below shows which of the six suites are free on which nights. It is refreshed every 30 minutes from the booking calendars of the platforms the house is listed on. Choose a suite, click a check-in and a check-out date, and send the request. <strong>A request is not yet a confirmed booking</strong>: the team checks it and confirms by e-mail or WhatsApp, usually within 24 hours. No payment is due until then.</p>
+<p class="lead">The calendar below shows which of the five suites are free on which nights. It is refreshed every 30 minutes from the booking calendars of the platforms the house is listed on. Choose a suite, click a check-in and a check-out date, and send the request. <strong>A request is not yet a confirmed booking</strong>: the team checks it and confirms by e-mail or WhatsApp, usually within 24 hours. No payment is due until then.</p>
 <p class="meta" id="avail-updated">Loading availability…</p></section>
 
 <section class="wrap avail">
@@ -343,7 +343,7 @@ def page_availability():
 <script src="/assets/calendar.js" defer></script>
 """
     write("/availability/", layout("/availability/", "Availability calendar and booking request | OIA Suites Moalboal",
-        "Live availability for all six suites at OIA Suites Moalboal, refreshed every 30 minutes from the booking platform calendars. Send a booking request; the team confirms within 24 hours.",
+        "Live availability for all five suites at OIA Suites Moalboal, refreshed every 30 minutes from the booking platform calendars. Send a booking request; the team confirms within 24 hours.",
         body, crumbs=[("/", "Home"), ("/availability/", "Availability")]))
 
 def page_nomads():
@@ -373,7 +373,7 @@ def page_nomads():
   <div class="grid-3 fact-cards">
     <div class="fact"><h3>250 Mbps fiber + Starlink</h3><p>Globe fiber internet with 250 Mbps download, with a Starlink Gen 3 V4 dish as backup. Both are mounted on the property and cover every suite and the common areas. Guests rate the WiFi 9.2 on Booking.com.</p></div>
     <div class="fact"><h3>A desk in every room</h3><p>Each suite has a work desk with an office chair, power sockets by the bed, and a large smart TV that doubles as a second screen. Blackout curtains and split-type air conditioning keep the room cool and dark for calls at odd hours.</p></div>
-    <div class="fact"><h3>Quiet by design</h3><p>The house is in a residential lane in Tongo, Basdiot, 13 minutes on foot from the bars of Panagsama. Quiet hours from 10 PM to 8 AM, six rooms in total, and a team on site during the day.</p></div>
+    <div class="fact"><h3>Quiet by design</h3><p>The house is in a residential lane in Tongo, Basdiot, 13 minutes on foot from the bars of Panagsama. Quiet hours from 10 PM to 8 AM, five rooms in total, and a team on site during the day.</p></div>
     <div class="fact"><h3>Kitchen for long stays</h3><p>A full shared kitchen with hob, microwave, espresso machine, ice-making fridge and utensils. Free drinking water on both floors. A grill outside. Groceries are 10 minutes away at Moalboal market and Gaisano Grand.</p></div>
     <div class="fact"><h3>Everything arranged at the counter</h3><p>Scooter rental from PHP 300 per day, laundry collected and returned the next day, tours and transfers booked on the spot, free pick-up on arrival. Less admin, more work done.</p></div>
     <div class="fact"><h3>Rated by the people who stayed</h3><p>Booking.com 9.4 from 126 reviews. Airbnb host rating 4.96 from 154 reviews, Superhost. Agoda 9.6. Cleanliness scores 9.7 to 10 across platforms.</p></div>
@@ -459,7 +459,7 @@ def page_laundry():
 <section class="wrap page-head">
   <p class="eyebrow">Own laundry, clean linen</p>
   <h1>Laundry in Moalboal: OIA Suites runs its own laundry</h1>
-  <p class="lead">OIA Suites Moalboal is one of the few places to stay in Moalboal with its own laundry business. Every sheet, pillowcase and towel in the six suites is washed at <a href="{LAUNDRY_URL}" rel="noopener" target="_blank">{LAUNDRY_NAME}</a>, the sister business in Moalboal town. Guests can hand in their own laundry at the counter and get it back washed, dried and folded the next day.</p>
+  <p class="lead">OIA Suites Moalboal is one of the few places to stay in Moalboal with its own laundry business. Every sheet, pillowcase and towel in the five suites is washed at <a href="{LAUNDRY_URL}" rel="noopener" target="_blank">{LAUNDRY_NAME}</a>, the sister business in Moalboal town. Guests can hand in their own laundry at the counter and get it back washed, dried and folded the next day.</p>
   <div class="hero-actions"><a class="btn btn-primary btn-lg" href="/availability/">Check availability</a><a class="btn btn-ghost btn-lg" href="#guests">Laundry for guests</a></div>
 </section>
 

@@ -46,8 +46,8 @@ ROOMS = [
          intro="Suite 1 is the most-reviewed room of the house and holds a perfect 5.0 on Airbnb. A 25 m² room on the first floor with king-size bed, en-suite bathroom, work desk and a private balcony.",
          photos=["suite-1-c", "suite-1-b", "suite-1-a", "suite-1-d", "balcony-green"]),
     dict(n=2, slug="suite-2", name="Suite 2", size=25, floor="First floor", view="Private balcony",
-         bed="1 king-size bed", guests=2, airbnb=AIRBNB[2], rating="4.97 (37 reviews on Airbnb)",
-         intro="Suite 2 is a 25 m² first-floor room with a king-size bed, private bathroom, dedicated desk and a balcony with a chair for the evening. Guests rate it 4.97 on Airbnb and it is marked as a Guest Favorite.",
+         bed="1 king-size bed (extra bed for 1 child on request)", guests=3, airbnb=AIRBNB[2], rating="4.97 (37 reviews on Airbnb)",
+         intro="Suite 2 is a 25 m² first-floor room with a king-size bed, private bathroom, dedicated desk and a balcony with a chair for the evening. It is the room that takes an extra bed for one child. Guests rate it 4.97 on Airbnb and it is marked as a Guest Favorite.",
          photos=["suite-2-a", "suite-2-b", "suite-2-c", "suite-2-d", "balcony-chairs"]),
     dict(n=3, slug="suite-3", name="Suite 3", size=24, floor="First floor", view="Private balcony",
          bed="1 king-size bed", guests=2, airbnb=AIRBNB[3], rating="4.89 (28 reviews on Airbnb)",
@@ -61,10 +61,6 @@ ROOMS = [
          bed="1 king-size bed", guests=2, airbnb=AIRBNB[5], rating="5.0 (16 reviews on Airbnb)",
          intro="Suite 5 is the newest room on the platforms and already holds a 5.0 rating. 25 m², king-size bed, en-suite bathroom, work desk, smart TV and a balcony with two chairs among the palm tops.",
          photos=["suite-5-a", "suite-5-b", "suite-5-c", "suite-5-d", "balcony-view"]),
-    dict(n=6, slug="suite-6", name="Suite 6", size=25, floor="First floor", view="Private balcony",
-         bed="1 king-size bed (extra bed for 1 child on request)", guests=3, airbnb=None, rating=None,
-         intro="Suite 6 is the family-friendly room of the house: a 25 m² room with king-size bed, private bathroom, desk, smart TV and balcony, with space for an extra bed for one child on request. Bookable on Booking.com and directly via this website.",
-         photos=["suite-6-a", "suite-6-b", "suite-6-c", "suite-6-d", "living-room"]),
 ]
 
 REVIEWS = [
@@ -109,7 +105,7 @@ FAQ = [
         ("Is there someone on site?",
          "Yes. Staff are on site daily from 8:00 AM to 8:00 PM, and a family member is available from 8:00 PM to 8:00 AM. There are exterior security cameras and a 24-hour security presence."),
         ("Are children welcome?",
-         "Yes. Children of all ages are welcome. Children from 3 years pay the adult rate. A baby cot is available on request at no charge. Suite 6 can take an extra bed for one child."),
+         "Yes. Children of all ages are welcome. Children from 3 years pay the adult rate. A baby cot is available on request at no charge. Suite 2 can take an extra bed for one child."),
         ("Are pets allowed?",
          "Yes, pets are allowed on request. Food and water bowls are available."),
         ("Is smoking allowed?",

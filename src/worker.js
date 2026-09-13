@@ -8,7 +8,7 @@
  *   Result is cached for 30 minutes. Without any secret the static file is served.
  */
 const CANONICAL_HOST = "oiasuitesmoalboal.com";
-const ROOMS = ["suite-1", "suite-2", "suite-3", "suite-4", "suite-5", "suite-6"];
+const ROOMS = ["suite-1", "suite-2", "suite-3", "suite-4", "suite-5"];
 const CACHE_SECONDS = 1800;
 const HORIZON_DAYS = 550;
 
@@ -18,6 +18,11 @@ export default {
     // Canonical host: redirect www and workers.dev to the main domain once the zone is active
     if (url.hostname !== CANONICAL_HOST && (url.hostname === "www." + CANONICAL_HOST || url.hostname.endsWith(".workers.dev"))) {
       url.hostname = CANONICAL_HOST;
+      return Response.redirect(url.toString(), 301);
+    }
+    // Suite 6 was removed from the site (no such room on the platforms)
+    if (/^\/rooms\/suite-6\/?$/.test(url.pathname)) {
+      url.pathname = "/rooms/";
       return Response.redirect(url.toString(), 301);
     }
     // Alias without hyphen
