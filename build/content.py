@@ -77,6 +77,14 @@ BREAKFAST_MENU = [
     ("American set", "Bacon, omelette, whole-wheat bread, butter and marmalade."),
 ]
 
+# Photos of the actual trays, as served. Added by build/photos.py.
+BREAKFAST_PHOTOS = [
+    ("breakfast-bacsilog", "Bacsilog at OIA Suites Moalboal: crisp bacon, two fried eggs and garlic rice with a banana, coffee and orange juice"),
+    ("breakfast-tosilog", "Tosilog at OIA Suites Moalboal: sweet cured tocino with scrambled eggs, garlic rice, a banana, coffee and orange juice"),
+    ("breakfast-american", "American set at OIA Suites Moalboal: bacon, scrambled eggs, whole-wheat toast with jam, fresh mango, coffee and orange juice"),
+    ("breakfast-tosilog-mango", "Tosilog with fresh mango at OIA Suites Moalboal: tocino, scrambled eggs, garlic rice, mango, black coffee and orange juice"),
+]
+
 BREAKFAST_PREORDER = [
     ("Tortang talong", "Grilled aubergine omelette, a Filipino classic. Order a day ahead."),
     ("Chicken tinola", "Ginger and chicken soup with green papaya. For guests who prefer something warm and light. Order a day ahead."),

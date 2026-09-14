@@ -203,7 +203,7 @@ def page_home():
 </section>
 
 <section class="wrap two-col">
-  {img("kitchen-island", "Kitchen island at OIA Suites Moalboal where breakfast is prepared and served")}
+  {img(*(BREAKFAST_PHOTOS[0] if os.path.exists(os.path.join(OUT, "images", BREAKFAST_PHOTOS[0][0] + ".webp")) else ("kitchen-island", "Kitchen island at OIA Suites Moalboal where breakfast is prepared and served")))}
   <div>
     <p class="eyebrow">Breakfast</p>
     <h2>Tosilog, bacsilog or an American set, cooked to order</h2>
@@ -520,15 +520,27 @@ def page_breakfast():
     path = "/breakfast/"
     sets = "".join(f'<div class="fact"><h3>{esc(n)}</h3><p>{esc(d)}</p></div>' for n, d in BREAKFAST_MENU)
     pre = "".join(f'<div class="fact"><h3>{esc(n)}</h3><p>{esc(d)}</p></div>' for n, d in BREAKFAST_PREORDER)
+    have = [(n, a) for n, a in BREAKFAST_PHOTOS if os.path.exists(os.path.join(OUT, "images", n + ".webp"))]
+    photos = ""
+    if have:
+        photos = ('<section class="wrap"><div class="section-head"><h2>As it is served</h2>'
+                  '<p>Photographed on the tray it arrives on, plate, coffee, juice and fruit included in the ' + BREAKFAST_PRICE + '.</p></div>'
+                  '<div class="gallery gallery-4">' + "".join(img(n, a, lazy=(i > 0)) for i, (n, a) in enumerate(have)) + '</div></section>')
+    og = f"/images/{have[0][0]}.webp" if have else "/images/kitchen.webp"
+    shot = {"Bacsilog": "breakfast-bacsilog", "Tosilog": "breakfast-tosilog", "American set": "breakfast-american"}
+    def item(n, d):
+        mi = {"@type": "MenuItem", "name": n, "description": d,
+              "offers": {"@type": "Offer", "price": BREAKFAST_PRICE.replace("PHP ", ""), "priceCurrency": "PHP"}}
+        if n in shot and any(h[0] == shot[n] for h in have):
+            mi["image"] = f"{BASE}/images/{shot[n]}.webp"
+        return mi
     menu = {"@context": "https://schema.org", "@type": "Menu", "@id": BASE + path + "#menu", "url": BASE + path,
             "name": "Breakfast menu at OIA Suites Moalboal", "inLanguage": "en",
             "hasMenuSection": [
                 {"@type": "MenuSection", "name": "Breakfast sets", "description": f"Served {BREAKFAST_HOURS}, with {BREAKFAST_INCLUDED}.",
-                 "hasMenuItem": [{"@type": "MenuItem", "name": n, "description": d,
-                                  "offers": {"@type": "Offer", "price": BREAKFAST_PRICE.replace("PHP ", ""), "priceCurrency": "PHP"}} for n, d in BREAKFAST_MENU]},
+                 "hasMenuItem": [item(n, d) for n, d in BREAKFAST_MENU]},
                 {"@type": "MenuSection", "name": "On pre-order", "description": "Ordered a day in advance.",
-                 "hasMenuItem": [{"@type": "MenuItem", "name": n, "description": d,
-                                  "offers": {"@type": "Offer", "price": BREAKFAST_PRICE.replace("PHP ", ""), "priceCurrency": "PHP"}} for n, d in BREAKFAST_PREORDER]},
+                 "hasMenuItem": [item(n, d) for n, d in BREAKFAST_PREORDER]},
             ]}
     offer = {"@context": "https://schema.org", "@type": "Offer", "name": "Breakfast at OIA Suites Moalboal", "url": BASE + path,
              "price": BREAKFAST_PRICE.replace("PHP ", ""), "priceCurrency": "PHP", "seller": {"@id": BASE + "/#hotel"},
@@ -540,7 +552,7 @@ def page_breakfast():
   <p class="lead">Breakfast is cooked to order in the house kitchen: five Filipino silog sets or an American set, {BREAKFAST_PRICE} per serving, served {BREAKFAST_HOURS} with {BREAKFAST_INCLUDED}. Order at the counter the evening before or send a message, and say whether it should be in the dining room or on the balcony.</p>
   <div class="hero-actions"><a class="btn btn-primary btn-lg" href="/availability/">Check availability</a><a class="btn btn-ghost btn-lg" href="#menu">See the menu</a></div>
 </section>
-
+{photos}
 <section class="wrap two-col">
   {img("kitchen", "The kitchen at OIA Suites Moalboal where breakfast is cooked to order")}
   <div>
@@ -581,7 +593,7 @@ def page_breakfast():
 """
     write(path, layout(path, f"Breakfast: Filipino and American sets, {BREAKFAST_PRICE} | OIA Suites Moalboal",
         f"Breakfast at OIA Suites Moalboal: tosilog, bacsilog, longsilog, hotsilog, cornsilog or an American set, {BREAKFAST_PRICE} per serving with {BREAKFAST_INCLUDED}, served {BREAKFAST_HOURS} in the dining room or on the balcony.",
-        body, schemas=[menu, offer], og_image="/images/kitchen.webp", crumbs=[("/", "Home"), (path, "Breakfast")]))
+        body, schemas=[menu, offer], og_image=og, crumbs=[("/", "Home"), (path, "Breakfast")]))
 
 def page_faq():
     path = "/faq/"
