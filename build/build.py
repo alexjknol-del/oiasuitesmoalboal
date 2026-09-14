@@ -8,7 +8,7 @@ TODAY = datetime.date.today().isoformat()
 
 NAV = [
     ("/", "Home"), ("/rooms/", "Rooms"), ("/availability/", "Availability"),
-    ("/accommodation-for-digital-nomads/", "Digital Nomads"), ("/services/", "Services & Tours"), ("/laundry-moalboal/", "Laundry"),
+    ("/accommodation-for-digital-nomads/", "Digital Nomads"), ("/breakfast/", "Breakfast"), ("/services/", "Services & Tours"), ("/laundry-moalboal/", "Laundry"),
     ("/faq/", "FAQ"), ("/contact/", "Contact"),
 ]
 
@@ -199,6 +199,16 @@ def page_home():
       <a class="btn btn-light" href="/accommodation-for-digital-nomads/">Why remote workers choose OIA Suites</a>
     </div>
     {img("workspace", "Desk with office chair and king-size bed in a suite at OIA Suites Moalboal")}
+  </div>
+</section>
+
+<section class="wrap two-col">
+  {img("kitchen-island", "Kitchen island at OIA Suites Moalboal where breakfast is prepared and served")}
+  <div>
+    <p class="eyebrow">Breakfast</p>
+    <h2>Tosilog, bacsilog or an American set, cooked to order</h2>
+    <p>There is no restaurant in the lane and nothing open early on Panagsama. Breakfast is cooked in the house kitchen instead: five Filipino silog sets or an American set, {BREAKFAST_PRICE} per serving with {BREAKFAST_INCLUDED}, served {BREAKFAST_HOURS} in the dining room or on the balcony. Order it at the counter the evening before. Guests leaving early for Oslob or canyoneering can have it earlier or packed to take along.</p>
+    <a class="btn btn-ghost" href="/breakfast/">See the breakfast menu</a>
   </div>
 </section>
 
@@ -506,6 +516,73 @@ def page_laundry():
         "OIA Suites Moalboal runs its own laundry, Laundry Lounge Cebu. Fresh linen washed in commercial German machines, and guest laundry washed, dried and folded for PHP 190 per load, back the next day.",
         body, schemas=[schema, offer], og_image="/images/laundry-machines.webp", crumbs=[("/", "Home"), (path, "Laundry")]))
 
+def page_breakfast():
+    path = "/breakfast/"
+    sets = "".join(f'<div class="fact"><h3>{esc(n)}</h3><p>{esc(d)}</p></div>' for n, d in BREAKFAST_MENU)
+    pre = "".join(f'<div class="fact"><h3>{esc(n)}</h3><p>{esc(d)}</p></div>' for n, d in BREAKFAST_PREORDER)
+    menu = {"@context": "https://schema.org", "@type": "Menu", "@id": BASE + path + "#menu", "url": BASE + path,
+            "name": "Breakfast menu at OIA Suites Moalboal", "inLanguage": "en",
+            "hasMenuSection": [
+                {"@type": "MenuSection", "name": "Breakfast sets", "description": f"Served {BREAKFAST_HOURS}, with {BREAKFAST_INCLUDED}.",
+                 "hasMenuItem": [{"@type": "MenuItem", "name": n, "description": d,
+                                  "offers": {"@type": "Offer", "price": BREAKFAST_PRICE.replace("PHP ", ""), "priceCurrency": "PHP"}} for n, d in BREAKFAST_MENU]},
+                {"@type": "MenuSection", "name": "On pre-order", "description": "Ordered a day in advance.",
+                 "hasMenuItem": [{"@type": "MenuItem", "name": n, "description": d,
+                                  "offers": {"@type": "Offer", "price": BREAKFAST_PRICE.replace("PHP ", ""), "priceCurrency": "PHP"}} for n, d in BREAKFAST_PREORDER]},
+            ]}
+    offer = {"@context": "https://schema.org", "@type": "Offer", "name": "Breakfast at OIA Suites Moalboal", "url": BASE + path,
+             "price": BREAKFAST_PRICE.replace("PHP ", ""), "priceCurrency": "PHP", "seller": {"@id": BASE + "/#hotel"},
+             "description": f"Filipino or American breakfast, {BREAKFAST_PRICE} per serving, served {BREAKFAST_HOURS} with {BREAKFAST_INCLUDED}. Ordered the evening before."}
+    body = f"""
+<section class="wrap page-head">
+  <p class="eyebrow">Ordered the night before</p>
+  <h1>Breakfast at OIA Suites Moalboal</h1>
+  <p class="lead">Breakfast is cooked to order in the house kitchen: five Filipino silog sets or an American set, {BREAKFAST_PRICE} per serving, served {BREAKFAST_HOURS} with {BREAKFAST_INCLUDED}. Order at the counter the evening before or send a message, and say whether it should be in the dining room or on the balcony.</p>
+  <div class="hero-actions"><a class="btn btn-primary btn-lg" href="/availability/">Check availability</a><a class="btn btn-ghost btn-lg" href="#menu">See the menu</a></div>
+</section>
+
+<section class="wrap two-col">
+  {img("kitchen", "The kitchen at OIA Suites Moalboal where breakfast is cooked to order")}
+  <div>
+    <h2>Why order it in the house</h2>
+    <p>There is no restaurant on site and nothing open for breakfast in the lane. The nearest places to eat are on Panagsama Beach, five minutes away by scooter, and most of them start serving later than guests who dive, snorkel or take a call with Europe want to eat. Breakfast at the house closes that gap: it is ready when it is asked for, at a price no restaurant in Moalboal matches for a full plate with coffee.</p>
+    <p>Guests on an early tour, the Oslob van leaves around 3:20 AM and canyoneering not much later, can ask for breakfast before 6:00 AM or have it packed to take along. Mention it when ordering.</p>
+  </div>
+</section>
+
+<section class="wrap facts" id="menu">
+  <div class="section-head"><h2>The menu</h2><p>Every set is {BREAKFAST_PRICE} per person and comes with {BREAKFAST_INCLUDED}. The Filipino sets are silog dishes: a protein with <em>sinangag</em> (garlic rice) and <em>itlog</em> (fried egg).</p></div>
+  <div class="grid-3 fact-cards">{sets}</div>
+</section>
+
+<section class="wrap facts">
+  <div class="section-head"><h2>On pre-order</h2><p>Ordered a day ahead rather than the evening before, because they are cooked from scratch.</p></div>
+  <div class="grid-2 fact-cards">{pre}</div>
+</section>
+
+<section class="wrap two-col">
+  <div>
+    <h2>How to order</h2>
+    <ul class="checks">
+      <li>Tell the team at the counter the evening before, or send a message on <a href="https://wa.me/{WHATSAPP_WA}" rel="noopener" target="_blank">WhatsApp</a> or <a href="{MESSENGER}" rel="noopener" target="_blank">Messenger</a>.</li>
+      <li>Say which set, for how many people, and at what time.</li>
+      <li>Say where: the dining table downstairs or the balcony of the suite.</li>
+      <li>Tortang talong and chicken tinola need a day's notice.</li>
+      <li>Leaving before 6:00 AM for a tour? Ask for it earlier or packed to take along.</li>
+      <li>Paid at check-out together with the room, or per serving at the counter.</li>
+    </ul>
+    <h2>Or make it yourself</h2>
+    <p>The shared kitchen on the ground floor is free to use and has a hob, microwave, a refrigerator with built-in ice maker, an espresso machine and a drip coffee maker. Coffee, tea and drinking water are free for all guests, around the clock. Groceries come from the market or Gaisano Grand in Moalboal town, 10 minutes away by scooter.</p>
+  </div>
+  <div class="intro-imgs">{img("living-room-2", "Dining table on the ground floor where breakfast is served at OIA Suites Moalboal")}{img("balcony-chairs", "Balcony with two chairs where breakfast can be served in the suite")}</div>
+</section>
+
+<section class="wrap cta-box"><h2>Book a suite and add breakfast on arrival</h2><p>Pick dates in the calendar. Breakfast does not have to be arranged in advance; ordering it on the first evening is enough.</p><a class="btn btn-primary btn-lg" href="/availability/">Check availability</a></section>
+"""
+    write(path, layout(path, f"Breakfast: Filipino and American sets, {BREAKFAST_PRICE} | OIA Suites Moalboal",
+        f"Breakfast at OIA Suites Moalboal: tosilog, bacsilog, longsilog, hotsilog, cornsilog or an American set, {BREAKFAST_PRICE} per serving with {BREAKFAST_INCLUDED}, served {BREAKFAST_HOURS} in the dining room or on the balcony.",
+        body, schemas=[menu, offer], og_image="/images/kitchen.webp", crumbs=[("/", "Home"), (path, "Breakfast")]))
+
 def page_faq():
     path = "/faq/"
     sections = ""
@@ -564,7 +641,7 @@ def page_404():
     write("/404.html", html_)
 
 def sitemap():
-    urls = ["/", "/rooms/", "/availability/", "/accommodation-for-digital-nomads/", "/services/", "/laundry-moalboal/", "/faq/", "/contact/"] + [f"/rooms/{r['slug']}/" for r in ROOMS]
+    urls = ["/", "/rooms/", "/availability/", "/accommodation-for-digital-nomads/", "/breakfast/", "/services/", "/laundry-moalboal/", "/faq/", "/contact/"] + [f"/rooms/{r['slug']}/" for r in ROOMS]
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(
         f"  <url><loc>{BASE}{u}</loc><lastmod>{TODAY}</lastmod></url>\n" for u in urls) + "</urlset>\n"
     write("/sitemap.xml", xml)
@@ -580,14 +657,14 @@ def availability_seed():
     json.dump(data, open(p, "w"), indent=1)
 
 def main():
-    for d in ["rooms", "availability", "accommodation-for-digital-nomads", "services", "laundry-moalboal", "faq", "contact", "request-sent"]:
+    for d in ["rooms", "availability", "accommodation-for-digital-nomads", "breakfast", "services", "laundry-moalboal", "faq", "contact", "request-sent"]:
         shutil.rmtree(os.path.join(OUT, d), ignore_errors=True)
     os.makedirs(os.path.join(OUT, "assets"), exist_ok=True)
     for a in ["style.css", "site.js", "calendar.js"]:
         shutil.copy(os.path.join(os.path.dirname(__file__), "assets", a), os.path.join(OUT, "assets", a))
     page_home(); page_rooms()
     for r in ROOMS: page_room(r)
-    page_availability(); page_nomads(); page_services(); page_laundry(); page_faq(); page_contact(); page_sent(); page_404(); sitemap(); availability_seed()
+    page_availability(); page_nomads(); page_breakfast(); page_services(); page_laundry(); page_faq(); page_contact(); page_sent(); page_404(); sitemap(); availability_seed()
     print("built", TODAY)
 
 if __name__ == "__main__":

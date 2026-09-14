@@ -63,6 +63,25 @@ ROOMS = [
          photos=["suite-5-a", "suite-5-b", "suite-5-c", "suite-5-d", "balcony-view"]),
 ]
 
+# Breakfast, served on order in the dining area or on the balcony
+BREAKFAST_PRICE = "PHP 250"
+BREAKFAST_HOURS = "6:00 to 10:00 AM"
+BREAKFAST_INCLUDED = "coffee, juice and fresh fruit"
+
+BREAKFAST_MENU = [
+    ("Tosilog", "Tocino, the sweet cured pork that most guests order twice. With garlic rice and fried eggs."),
+    ("Bacsilog", "Crisp bacon with garlic rice and fried eggs, the closest thing to a Filipino-American hybrid."),
+    ("Longsilog", "Longganisa, the local sweet-garlicky sausage, with garlic rice and fried eggs."),
+    ("Hotsilog", "Filipino hotdog with garlic rice and fried eggs. The one children pick."),
+    ("Cornsilog", "Corned beef with garlic rice and fried eggs."),
+    ("American set", "Bacon, omelette, whole-wheat bread, butter and marmalade."),
+]
+
+BREAKFAST_PREORDER = [
+    ("Tortang talong", "Grilled aubergine omelette, a Filipino classic. Order a day ahead."),
+    ("Chicken tinola", "Ginger and chicken soup with green papaya. For guests who prefer something warm and light. Order a day ahead."),
+]
+
 REVIEWS = [
     dict(name="Lydia", origin="United Kingdom", platform="Booking.com", url="https://www.booking.com/hotel/ph/oia.html",
          text="Amazing room with en-suite! Great WiFi connection (had an interview for a role back in the UK and the connection was very stable). Bed was comfy, staff were so lovely! Would recommend and stay again."),
@@ -121,7 +140,13 @@ FAQ = [
         ("Is there a kitchen?",
          "Yes. The ground floor has a fully equipped shared kitchen with cooking hob, microwave, refrigerator with ice maker, espresso machine and drip coffee maker, cooking utensils and a dining table. Use is free of charge. A grill is available outside."),
         ("Is breakfast available?",
-         "Yes, on order. Filipino or American breakfast for PHP 250 per serving, served between 6:00 AM and 10:00 AM with coffee, juice and fruit. Order at the counter the night before or send a message. There is no restaurant on site; several restaurants are a few minutes away by scooter."),
+         "Yes, on order. Filipino or American breakfast for PHP 250 per serving, served between 6:00 AM and 10:00 AM with coffee, juice and fruit. Order at the counter the night before or send a message. There is no restaurant on site; several restaurants are a few minutes away by scooter. The full menu is on the <a href='/breakfast/'>breakfast page</a>."),
+        ("What is on the breakfast menu?",
+         "Five Filipino silog sets (tosilog, bacsilog, longsilog, hotsilog and cornsilog: cured pork, bacon, sausage, hotdog or corned beef with garlic rice and fried eggs) and an American set with bacon, omelette, whole-wheat bread, butter and marmalade. Tortang talong and chicken tinola can be ordered a day ahead. Every set comes with coffee, juice and fresh fruit for PHP 250."),
+        ("When and where is breakfast served?",
+         "Between 6:00 AM and 10:00 AM, in the dining area downstairs or on the balcony of the suite. Guests leaving early for a Kawasan or Oslob tour can ask for it before 6:00 AM."),
+        ("Can I make my own breakfast?",
+         "Yes. The shared kitchen is free to use and has a hob, microwave, refrigerator with ice maker, espresso machine and drip coffee maker. Coffee, tea and drinking water are free for all guests. The market and Gaisano Grand in Moalboal town are 10 minutes away by scooter."),
         ("Is drinking water provided?",
          "Yes. Water dispensers on both floors give free drinking water around the clock. The refrigerator has a built-in ice maker."),
         ("Is there parking?",
