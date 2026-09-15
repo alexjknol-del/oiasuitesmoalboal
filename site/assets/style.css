@@ -177,6 +177,36 @@ form input:focus,form select:focus,form textarea:focus{outline:2px solid var(--s
 /* map */
 .map iframe{width:100%;height:380px;border:0;border-radius:var(--r)}
 
+/* Iris, the FAQ assistant (Greek blue and white, after Oia on Santorini) */
+.iris{--greek:#1e5fa8;--greek-2:#164a85;--meander:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 8'%3E%3Cpath fill='none' stroke='%23fff' stroke-width='1.2' d='M0 7h9V2H4v2h3V6H2V0h14'/%3E%3C/svg%3E");position:fixed;right:1.1rem;bottom:1.1rem;z-index:60;font-family:var(--sans)}
+.iris-dome{display:inline-block;width:34px;height:34px;border-radius:50%;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect x='9' y='22' width='22' height='11' rx='1' fill='%23e6f2f8'/%3E%3Cpath d='M9 22a11 11 0 0 1 22 0z' fill='%231e5fa8'/%3E%3Crect x='19' y='7' width='2' height='6' fill='%231e5fa8'/%3E%3Crect x='17' y='9' width='6' height='2' fill='%231e5fa8'/%3E%3C/svg%3E") center/78% no-repeat;flex-shrink:0}
+.iris-btn{display:flex;align-items:center;gap:.6rem;background:var(--greek);color:#fff;border:0;border-radius:999px;padding:.45rem 1.1rem .45rem .45rem;font:inherit;font-weight:600;font-size:.95rem;cursor:pointer;box-shadow:0 10px 30px rgba(30,95,168,.35)}
+.iris-btn:hover{background:var(--greek-2)}
+.iris-btn[aria-expanded="true"]{display:none}
+.iris-panel{position:absolute;right:0;bottom:0;width:min(380px,calc(100vw - 2.2rem));max-height:min(640px,calc(100vh - 2.2rem));background:#fff;border-radius:18px;box-shadow:0 20px 60px rgba(15,61,94,.25);display:flex;flex-direction:column;overflow:hidden}
+.iris-head{display:flex;align-items:center;gap:.7rem;background:var(--greek);color:#fff;padding:.8rem 1rem;position:relative}
+.iris-head::after{content:"";position:absolute;left:0;right:0;bottom:0;height:8px;background:var(--meander) repeat-x;background-size:16px 8px;opacity:.55}
+.iris-head strong{display:block;font-family:var(--serif);font-size:1.15rem;line-height:1.1}
+.iris-head small{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.iris-close{margin-left:auto;background:none;border:0;color:#fff;font-size:1.6rem;line-height:1;cursor:pointer;width:36px;height:36px;border-radius:50%}
+.iris-close:hover{background:rgba(255,255,255,.15)}
+.iris-log{padding:1rem;overflow-y:auto;display:flex;flex-direction:column;gap:.6rem;flex:1;min-height:180px;background:var(--sand)}
+.iris-msg{max-width:88%;padding:.65rem .9rem;border-radius:14px;font-size:.93rem;line-height:1.5}
+.iris-msg p{margin:.4em 0 0}.iris-msg p:first-child{margin-top:0}
+.iris-iris{background:#fff;border-bottom-left-radius:4px;align-self:flex-start;box-shadow:0 2px 8px rgba(15,61,94,.06)}
+.iris-user{background:var(--greek);color:#fff;border-bottom-right-radius:4px;align-self:flex-end}
+.iris-more{font-size:.85rem;color:var(--muted)}
+.iris-chips{display:flex;gap:.4rem;flex-wrap:wrap;padding:.6rem 1rem 0;background:#fff}
+.iris-chip{background:var(--sea-light);color:var(--navy);border:0;border-radius:999px;padding:.35rem .75rem;font:inherit;font-size:.8rem;font-weight:500;cursor:pointer}
+.iris-chip:hover{background:#d3e8f3}
+.iris-form{display:flex;gap:.5rem;padding:.7rem 1rem .4rem;background:#fff}
+.iris-form input{flex:1;font:inherit;padding:.6rem .8rem;border:1px solid #cdd5dc;border-radius:999px;min-width:0}
+.iris-form input:focus{outline:2px solid var(--greek);border-color:var(--greek)}
+.iris-form .btn{padding:.6rem 1rem;background:var(--greek);border-color:var(--greek)}
+.iris-note{margin:0;padding:0 1rem .8rem;font-size:.75rem;color:var(--muted);background:#fff}
+@media(max-width:480px){.iris{right:.75rem;bottom:.75rem}.iris-btn-label{display:none}.iris-btn{padding:.35rem}}
+@media print{.iris{display:none}}
+
 /* footer */
 .site-footer{background:var(--navy);color:#d6e4ee;padding-block:3rem 1.5rem;margin-top:3rem;font-size:.95rem}
 .site-footer h2{color:#fff;font-size:1.05rem;font-family:var(--sans);text-transform:uppercase;letter-spacing:.1em}

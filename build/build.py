@@ -8,7 +8,7 @@ TODAY = datetime.date.today().isoformat()
 
 NAV = [
     ("/", "Home"), ("/rooms/", "Rooms"), ("/availability/", "Availability"),
-    ("/accommodation-for-digital-nomads/", "Digital Nomads"), ("/breakfast/", "Breakfast"), ("/services/", "Services & Tours"), ("/laundry-moalboal/", "Laundry"),
+    ("/accommodation-for-digital-nomads/", "Digital Nomads"), ("/services/", "Services & Tours"), ("/laundry-moalboal/", "Laundry"),
     ("/faq/", "FAQ"), ("/contact/", "Contact"),
 ]
 
@@ -124,6 +124,7 @@ def layout(path, title, desc, body, schemas=(), og_image="/images/og-image.jpg",
   <div class="wrap copy"><p>© {datetime.date.today().year} {SITE_NAME}. Bookings through this website are requests and are confirmed by the team before they are final.</p></div>
 </footer>
 <script src="/assets/site.js" defer></script>
+<script src="/assets/iris.js" defer></script>
 </body>
 </html>"""
 
@@ -441,7 +442,8 @@ def page_services():
               "itemListElement": [{"@type": "Offer", "name": n, "description": d, "price": p.replace("PHP ", "").split(" ")[0].replace(",", ""), "priceCurrency": "PHP", "seller": {"@id": BASE + "/#hotel"}} for n, p, d in offers if p.startswith("PHP")]}
     body = f"""
 <section class="wrap page-head"><h1>Services, tours and transfers</h1><p class="lead">Everything below is arranged at the counter or by message. Prices are in Philippine peso and were last checked in September 2026; entrance fees are included where stated. Tour prices may change with fuel costs and local fees, so the team confirms the current price when booking.</p></section>
-<section class="wrap"><div class="grid-3 fact-cards">{cards}</div></section>
+<section class="wrap"><div class="grid-3 fact-cards">{cards}</div>
+<p class="meta" style="margin-top:1rem">The full breakfast menu, with photos of the trays as served, is on the <a href="/breakfast/">breakfast page</a>.</p></section>
 <section class="wrap two-col">
   <div><h2>Getting to OIA Suites</h2>
   <p><strong>From Mactan-Cebu International Airport or Cebu City:</strong> taxi or Grab to Cebu South Bus Terminal, then a Ceres bus towards Bato via Barili; get off in Moalboal town (about 3 hours, roughly PHP 200 to 250). From the bus stop or Jollibee Moalboal the team collects guests free of charge. A private van or car from the airport can be arranged in advance.</p>
@@ -660,6 +662,18 @@ def sitemap():
     write("/robots.txt", f"User-agent: *\nAllow: /\nDisallow: /request-sent/\n\nSitemap: {BASE}/sitemap.xml\n")
     write("/_headers", "/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Frame-Options: SAMEORIGIN\n/images/*\n  Cache-Control: public, max-age=31536000, immutable\n/assets/*\n  Cache-Control: public, max-age=86400\n/data/*\n  Cache-Control: no-cache\n")
 
+def faq_json():
+    """The FAQ as JSON for Iris (assets/iris.js), so the widget and the FAQ page can never disagree."""
+    import re
+    items = []
+    for cat, qas in FAQ:
+        for q, a in qas:
+            items.append({"category": cat, "question": q, "answer": a, "answer_text": re.sub("<[^>]+>", "", a), "url": "/faq/"})
+    p = os.path.join(OUT, "data", "faq.json")
+    os.makedirs(os.path.dirname(p), exist_ok=True)
+    with open(p, "w", encoding="utf-8") as f:
+        json.dump({"updated": TODAY, "items": items}, f, ensure_ascii=False, indent=1)
+
 def availability_seed():
     p = os.path.join(OUT, "data", "availability.json")
     if os.path.exists(p): return
@@ -672,11 +686,11 @@ def main():
     for d in ["rooms", "availability", "accommodation-for-digital-nomads", "breakfast", "services", "laundry-moalboal", "faq", "contact", "request-sent"]:
         shutil.rmtree(os.path.join(OUT, d), ignore_errors=True)
     os.makedirs(os.path.join(OUT, "assets"), exist_ok=True)
-    for a in ["style.css", "site.js", "calendar.js"]:
+    for a in ["style.css", "site.js", "calendar.js", "iris.js"]:
         shutil.copy(os.path.join(os.path.dirname(__file__), "assets", a), os.path.join(OUT, "assets", a))
     page_home(); page_rooms()
     for r in ROOMS: page_room(r)
-    page_availability(); page_nomads(); page_breakfast(); page_services(); page_laundry(); page_faq(); page_contact(); page_sent(); page_404(); sitemap(); availability_seed()
+    page_availability(); page_nomads(); page_breakfast(); page_services(); page_laundry(); page_faq(); page_contact(); page_sent(); page_404(); sitemap(); faq_json(); availability_seed()
     print("built", TODAY)
 
 if __name__ == "__main__":
