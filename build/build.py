@@ -46,6 +46,13 @@ def breadcrumb(items):
     return {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": i + 1, "name": n, "item": BASE + u} for i, (u, n) in enumerate(items)]}
 
+def asset(name):
+    """URL of an asset with a short content hash, so browsers and the CDN fetch the new file after every change."""
+    import hashlib
+    fp = os.path.join(os.path.dirname(__file__), "assets", name)
+    h = hashlib.md5(open(fp, "rb").read()).hexdigest()[:8]
+    return f"/assets/{name}?v={h}"
+
 def layout(path, title, desc, body, schemas=(), og_image="/images/og-image.jpg", crumbs=None, h1_in_body=True):
     canonical = BASE + path
     active = lambda u: ' aria-current="page"' if (u == path or (u != "/" and path.startswith(u))) else ""
@@ -79,7 +86,7 @@ def layout(path, title, desc, body, schemas=(), og_image="/images/og-image.jpg",
 <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="/assets/style.css">
+<link rel="stylesheet" href="{asset('style.css')}">
 {ld}
 </head>
 <body>
@@ -123,8 +130,8 @@ def layout(path, title, desc, body, schemas=(), og_image="/images/og-image.jpg",
   </div>
   <div class="wrap copy"><p>© {datetime.date.today().year} {SITE_NAME}. Bookings through this website are requests and are confirmed by the team before they are final.</p></div>
 </footer>
-<script src="/assets/site.js" defer></script>
-<script src="/assets/iris.js" defer></script>
+<script src="{asset('site.js')}" defer></script>
+<script src="{asset('iris.js')}" defer></script>
 </body>
 </html>"""
 
@@ -351,7 +358,7 @@ def page_availability():
   </form>
   <p class="alt-contact">Prefer to ask first? <a href="https://wa.me/{WHATSAPP_WA}" rel="noopener" target="_blank">WhatsApp</a>, <a href="{MESSENGER}" rel="noopener" target="_blank">Messenger</a> or <a href="tel:{PHONE_TEL}">{PHONE}</a>.</p>
 </section>
-<script src="/assets/calendar.js" defer></script>
+<script src="{asset('calendar.js')}" defer></script>
 """
     write("/availability/", layout("/availability/", "Availability calendar and booking request | OIA Suites Moalboal",
         "Live availability for all five suites at OIA Suites Moalboal, refreshed every 30 minutes from the booking platform calendars. Send a booking request; the team confirms within 24 hours.",
