@@ -123,6 +123,24 @@ def layout(path, title, desc, body, schemas=(), og_image="/images/og-image.jpg",
   </div>
   <div class="wrap copy"><p>© {datetime.date.today().year} {SITE_NAME}. Bookings through this website are requests and are confirmed by the team before they are final.</p></div>
 </footer>
+<div id="iris" class="iris" hidden>
+  <button class="iris-launch" type="button" aria-expanded="false" aria-controls="iris-panel">
+    <span class="iris-dome" aria-hidden="true"></span><span>Ask Iris</span>
+  </button>
+  <div class="iris-panel" id="iris-panel" role="dialog" aria-label="Ask Iris, the house assistant" hidden>
+    <div class="iris-head">
+      <span class="iris-dome" aria-hidden="true"></span>
+      <div><strong>Iris</strong><small>House assistant, OIA Suites</small></div>
+      <button class="iris-close" type="button" aria-label="Close">&times;</button>
+    </div>
+    <div class="iris-log" id="iris-log" aria-live="polite"></div>
+    <form class="iris-form" autocomplete="off">
+      <label class="visually-hidden" for="iris-q">Your question</label>
+      <input id="iris-q" type="text" placeholder="Ask about breakfast, check-in, wifi...">
+      <button type="submit" aria-label="Send">&rarr;</button>
+    </form>
+  </div>
+</div>
 <script src="/assets/site.js" defer></script>
 <script src="/assets/iris.js" defer></script>
 </body>
@@ -177,6 +195,7 @@ def page_home():
       <li>Five suites of 24 to 25 m², each with king-size bed, en-suite bathroom, desk and balcony</li>
       <li>Globe fiber 250 Mbps plus Starlink Gen 3 backup, in every room</li>
       <li>Shared kitchen with ice-making fridge, espresso machine and grill</li>
+      <li>Breakfast to order, Filipino or American, PHP 250 per serving</li>
       <li>Free parking, free drinking water, daily cleaning, pets welcome</li>
     </ul>
   </div>
@@ -203,19 +222,21 @@ def page_home():
   </div>
 </section>
 
-<section class="wrap two-col">
-  {img(*(BREAKFAST_PHOTOS[0] if os.path.exists(os.path.join(OUT, "images", BREAKFAST_PHOTOS[0][0] + ".webp")) else ("kitchen-island", "Kitchen island at OIA Suites Moalboal where breakfast is prepared and served")))}
-  <div>
-    <p class="eyebrow">Breakfast</p>
-    <h2>Tosilog, bacsilog or an American set, cooked to order</h2>
-    <p>There is no restaurant in the lane and nothing open early on Panagsama. Breakfast is cooked in the house kitchen instead: five Filipino silog sets or an American set, {BREAKFAST_PRICE} per serving with {BREAKFAST_INCLUDED}, served {BREAKFAST_HOURS} in the dining room or on the balcony. Order it at the counter the evening before. Guests leaving early for Oslob or canyoneering can have it earlier or packed to take along.</p>
-    <a class="btn btn-ghost" href="/breakfast/">See the breakfast menu</a>
-  </div>
-</section>
-
 <section class="wrap">
   <div class="section-head"><h2>What guests say</h2><p>Quotes from public reviews on Booking.com and Airbnb. Booking.com score 9.4 from 126 reviews; Airbnb host rating 4.96 from 154 reviews.</p></div>
   <div class="grid-3 reviews">{reviews}</div>
+</section>
+
+<section class="wrap two-col">
+  <div>
+    <p class="eyebrow">Breakfast</p>
+    <h2>A hot breakfast without leaving the house</h2>
+    <p>There is no restaurant on the premises and the nearest one is a scooter ride away, so the kitchen cooks breakfast to order. Five Filipino sets with garlic rice and eggs, an American set with bacon and whole-wheat bread, each PHP 250 per serving with coffee, juice and fruit. Ordered the evening before, served between 6:00 and 10:00 AM in the room or at the table downstairs.</p>
+    <p><a class="btn btn-ghost" href="/breakfast/">The breakfast menu</a></p>
+  </div>
+  <div>
+    {img("breakfast-tray", "Breakfast tray at OIA Suites Moalboal with tocino, garlic rice, scrambled eggs, mango, coffee and juice")}
+  </div>
 </section>
 
 <section class="wrap two-col">
@@ -426,7 +447,7 @@ def page_nomads():
 def page_services():
     path = "/services/"
     offers = [
-        ("Breakfast", "PHP 250 per serving", "Filipino set (tosilog, hotsilog, longsilog, bacsilog or cornsilog with garlic rice and eggs) or American set (bacon, whole-wheat bread, omelette, marmalade, butter), all served with coffee, juice and fruit. Tortang talong and chicken tinola by pre-order. Available 6:00 to 10:00 AM; order the night before at the counter or by message."),
+        ("Breakfast", "PHP 250 per serving", "Filipino set (tosilog, hotsilog, longsilog, bacsilog or cornsilog with garlic rice and eggs) or American set (bacon, whole-wheat bread, omelette, marmalade, butter), all served with coffee, juice and fruit. Tortang talong and chicken tinola by pre-order. Available 6:00 to 10:00 AM; order the night before at the counter or by message. Full menu on the <a href=\"/breakfast/\">breakfast page</a>."),
         ("Motorbike rental", "PHP 300 to 600 per day", "Yamaha Mio PHP 300, Honda Click PHP 400, Honda ADV160 PHP 600 per day, rented at the house. A valid driving licence is required."),
         ("Car transfers", "PHP 150 to 2,500", "Panagsama Beach PHP 150, Moalboal bus stop PHP 150, White Beach PHP 250, Oslob or Liloan port PHP 2,500. Private car with driver, up to 4 passengers. Pick-up from Jollibee Moalboal at check-in is free."),
         ("Sardine run and turtle snorkelling", "PHP 500 per person", "1 to 1.5 hours in the water at Panagsama with a guide, goggles and life jacket, entrance fee, pick-up and drop-off included."),
@@ -442,8 +463,7 @@ def page_services():
               "itemListElement": [{"@type": "Offer", "name": n, "description": d, "price": p.replace("PHP ", "").split(" ")[0].replace(",", ""), "priceCurrency": "PHP", "seller": {"@id": BASE + "/#hotel"}} for n, p, d in offers if p.startswith("PHP")]}
     body = f"""
 <section class="wrap page-head"><h1>Services, tours and transfers</h1><p class="lead">Everything below is arranged at the counter or by message. Prices are in Philippine peso and were last checked in September 2026; entrance fees are included where stated. Tour prices may change with fuel costs and local fees, so the team confirms the current price when booking.</p></section>
-<section class="wrap"><div class="grid-3 fact-cards">{cards}</div>
-<p class="meta" style="margin-top:1rem">The full breakfast menu, with photos of the trays as served, is on the <a href="/breakfast/">breakfast page</a>.</p></section>
+<section class="wrap"><div class="grid-3 fact-cards">{cards}</div></section>
 <section class="wrap two-col">
   <div><h2>Getting to OIA Suites</h2>
   <p><strong>From Mactan-Cebu International Airport or Cebu City:</strong> taxi or Grab to Cebu South Bus Terminal, then a Ceres bus towards Bato via Barili; get off in Moalboal town (about 3 hours, roughly PHP 200 to 250). From the bus stop or Jollibee Moalboal the team collects guests free of charge. A private van or car from the airport can be arranged in advance.</p>
@@ -451,6 +471,7 @@ def page_services():
   <p><strong>Address:</strong> {ADDRESS}, just before Turtle Bay Dive Resort. <a href="{MAPS}" rel="noopener" target="_blank">Open in Google Maps</a>.</p></div>
   {img("exterior-day", "OIA Suites seen from the lane, with the turquoise stairwell and balconies")}
 </section>
+<section class="wrap"><h2>Breakfast</h2><p>Breakfast is cooked at the house to order, Filipino or American, PHP 250 per serving with coffee, juice and fruit, served between 6:00 and 10:00 AM. The sets and how to order them are on the <a href="/breakfast/">breakfast page</a>.</p></section>
 <section class="wrap"><h2>Own laundry</h2><p>OIA Suites runs its own laundry in Moalboal town, Laundry Lounge Cebu. Linen and towels are washed there, and guests can hand in laundry at the counter. Details, rates and photos on the <a href="/laundry-moalboal/">laundry page</a>.</p></section>
 <section class="wrap cta-box"><h2>Book tours together with the room</h2><p>Mention the tours of interest in the booking request and the team prepares them for arrival.</p><a class="btn btn-primary btn-lg" href="/availability/">Check availability</a></section>
 """
@@ -520,82 +541,95 @@ def page_laundry():
 
 def page_breakfast():
     path = "/breakfast/"
-    sets = "".join(f'<div class="fact"><h3>{esc(n)}</h3><p>{esc(d)}</p></div>' for n, d in BREAKFAST_MENU)
-    pre = "".join(f'<div class="fact"><h3>{esc(n)}</h3><p>{esc(d)}</p></div>' for n, d in BREAKFAST_PREORDER)
-    have = [(n, a) for n, a in BREAKFAST_PHOTOS if os.path.exists(os.path.join(OUT, "images", n + ".webp"))]
-    photos = ""
-    if have:
-        photos = ('<section class="wrap"><div class="section-head"><h2>As it is served</h2>'
-                  '<p>Photographed on the tray it arrives on, plate, coffee, juice and fruit included in the ' + BREAKFAST_PRICE + '.</p></div>'
-                  '<div class="gallery gallery-4">' + "".join(img(n, a, lazy=(i > 0)) for i, (n, a) in enumerate(have)) + '</div></section>')
-    og = f"/images/{have[0][0]}.webp" if have else "/images/kitchen.webp"
-    shot = {"Bacsilog": "breakfast-bacsilog", "Tosilog": "breakfast-tosilog", "American set": "breakfast-american"}
-    def item(n, d):
-        mi = {"@type": "MenuItem", "name": n, "description": d,
-              "offers": {"@type": "Offer", "price": BREAKFAST_PRICE.replace("PHP ", ""), "priceCurrency": "PHP"}}
-        if n in shot and any(h[0] == shot[n] for h in have):
-            mi["image"] = f"{BASE}/images/{shot[n]}.webp"
-        return mi
-    menu = {"@context": "https://schema.org", "@type": "Menu", "@id": BASE + path + "#menu", "url": BASE + path,
-            "name": "Breakfast menu at OIA Suites Moalboal", "inLanguage": "en",
+    sets = [
+        ("Tosilog", "Tocino, sweet cured pork, with garlic or plain rice and eggs the way you like them: scrambled, boiled or sunny side up."),
+        ("Hotsilog", "Filipino hotdog with garlic or plain rice and eggs. The set most children ask for."),
+        ("Longsilog", "Longganisa, the local sweet-garlic sausage, with garlic or plain rice and eggs."),
+        ("Bacsilog", "Crisp bacon with garlic or plain rice and eggs."),
+        ("Cornsilog", "Corned beef with garlic or plain rice and eggs."),
+    ]
+    set_cards = "".join(f'<div class="fact"><h3>{esc(n)}</h3><p>{esc(d)}</p></div>' for n, d in sets)
+    menu = {"@context": "https://schema.org", "@type": "Menu", "@id": BASE + path + "#menu", "name": "Breakfast menu, OIA Suites Moalboal",
+            "url": BASE + path, "inLanguage": "en", "provider": {"@id": BASE + "/#hotel"},
             "hasMenuSection": [
-                {"@type": "MenuSection", "name": "Breakfast sets", "description": f"Served {BREAKFAST_HOURS}, with {BREAKFAST_INCLUDED}.",
-                 "hasMenuItem": [item(n, d) for n, d in BREAKFAST_MENU]},
-                {"@type": "MenuSection", "name": "On pre-order", "description": "Ordered a day in advance.",
-                 "hasMenuItem": [item(n, d) for n, d in BREAKFAST_PREORDER]},
+                {"@type": "MenuSection", "name": "Filipino breakfast",
+                 "description": "Served with coffee, juice and fruit.",
+                 "hasMenuItem": [{"@type": "MenuItem", "name": n, "description": d,
+                                  "offers": {"@type": "Offer", "price": "250", "priceCurrency": "PHP"}} for n, d in sets]},
+                {"@type": "MenuSection", "name": "American breakfast",
+                 "description": "Served with coffee, juice and fruit.",
+                 "hasMenuItem": [{"@type": "MenuItem", "name": "American breakfast",
+                                  "description": "Bacon, whole-wheat bread, omelette, marmalade and butter.",
+                                  "offers": {"@type": "Offer", "price": "250", "priceCurrency": "PHP"}}]},
+                {"@type": "MenuSection", "name": "By pre-order",
+                 "hasMenuItem": [{"@type": "MenuItem", "name": "Tortang talong", "description": "Filipino eggplant omelette.",
+                                  "offers": {"@type": "Offer", "price": "250", "priceCurrency": "PHP"}},
+                                 {"@type": "MenuItem", "name": "Chicken tinola", "description": "Clear chicken soup with ginger and green papaya.",
+                                  "offers": {"@type": "Offer", "price": "250", "priceCurrency": "PHP"}}]},
             ]}
-    offer = {"@context": "https://schema.org", "@type": "Offer", "name": "Breakfast at OIA Suites Moalboal", "url": BASE + path,
-             "price": BREAKFAST_PRICE.replace("PHP ", ""), "priceCurrency": "PHP", "seller": {"@id": BASE + "/#hotel"},
-             "description": f"Filipino or American breakfast, {BREAKFAST_PRICE} per serving, served {BREAKFAST_HOURS} with {BREAKFAST_INCLUDED}. Ordered the evening before."}
+    webpage = {"@context": "https://schema.org", "@type": "WebPage", "@id": BASE + path + "#webpage", "url": BASE + path,
+               "name": "Breakfast at OIA Suites Moalboal", "about": {"@id": BASE + "/#hotel"}, "isPartOf": {"@id": BASE + "/#website"}}
     body = f"""
 <section class="wrap page-head">
-  <p class="eyebrow">Ordered the night before</p>
+  <p class="eyebrow">Served 6:00 to 10:00 AM, daily</p>
   <h1>Breakfast at OIA Suites Moalboal</h1>
-  <p class="lead">Breakfast is cooked to order in the house kitchen: five Filipino silog sets or an American set, {BREAKFAST_PRICE} per serving, served {BREAKFAST_HOURS} with {BREAKFAST_INCLUDED}. Order at the counter the evening before or send a message, and say whether it should be in the dining room or on the balcony.</p>
-  <div class="hero-actions"><a class="btn btn-primary btn-lg" href="/availability/">Check availability</a><a class="btn btn-ghost btn-lg" href="#menu">See the menu</a></div>
-</section>
-{photos}
-<section class="wrap two-col">
-  {img("kitchen", "The kitchen at OIA Suites Moalboal where breakfast is cooked to order")}
-  <div>
-    <h2>Why order it in the house</h2>
-    <p>There is no restaurant on site and nothing open for breakfast in the lane. The nearest places to eat are on Panagsama Beach, five minutes away by scooter, and most of them start serving later than guests who dive, snorkel or take a call with Europe want to eat. Breakfast at the house closes that gap: it is ready when it is asked for, at a price no restaurant in Moalboal matches for a full plate with coffee.</p>
-    <p>Guests on an early tour, the Oslob van leaves around 3:20 AM and canyoneering not much later, can ask for breakfast before 6:00 AM or have it packed to take along. Mention it when ordering.</p>
-  </div>
+  <p class="lead">Moalboal wakes up early. Boats leave for the sardine run before seven and the canyoneering vans collect at half past five, long before the restaurants on Panagsama open their kitchens. That is why breakfast is cooked at the house: order it the evening before and it is on the table, or at the door of the suite, from 6:00 AM.</p>
 </section>
 
-<section class="wrap facts" id="menu">
-  <div class="section-head"><h2>The menu</h2><p>Every set is {BREAKFAST_PRICE} per person and comes with {BREAKFAST_INCLUDED}. The Filipino sets are silog dishes: a protein with <em>sinangag</em> (garlic rice) and <em>itlog</em> (fried egg).</p></div>
-  <div class="grid-3 fact-cards">{sets}</div>
-</section>
-
-<section class="wrap facts">
-  <div class="section-head"><h2>On pre-order</h2><p>Ordered a day ahead rather than the evening before, because they are cooked from scratch.</p></div>
-  <div class="grid-2 fact-cards">{pre}</div>
-</section>
+{img("breakfast-tosilog", "Tosilog breakfast at OIA Suites Moalboal: tocino, garlic rice, scrambled eggs, banana, coffee and iced juice", lazy=False, sizes="100vw")}
 
 <section class="wrap two-col">
   <div>
+    <h2>One price, PHP 250 per serving</h2>
+    <p>Every set costs the same and every set arrives with coffee, a glass of juice and fruit. That is roughly the price of a plain coffee and a pastry on the beach strip, without the twenty-minute ride there and back.</p>
+    <p>There is no restaurant on the premises. The kitchen downstairs is a working kitchen, shared with guests, and the team cooks to order in it rather than running a buffet that goes cold. It also means special requests are a matter of asking rather than a matter of policy: eggs scrambled, boiled or sunny side up, plain rice instead of garlic rice, bread instead of rice.</p>
     <h2>How to order</h2>
-    <ul class="checks">
-      <li>Tell the team at the counter the evening before, or send a message on <a href="https://wa.me/{WHATSAPP_WA}" rel="noopener" target="_blank">WhatsApp</a> or <a href="{MESSENGER}" rel="noopener" target="_blank">Messenger</a>.</li>
-      <li>Say which set, for how many people, and at what time.</li>
-      <li>Say where: the dining table downstairs or the balcony of the suite.</li>
-      <li>Tortang talong and chicken tinola need a day's notice.</li>
-      <li>Leaving before 6:00 AM for a tour? Ask for it earlier or packed to take along.</li>
-      <li>Paid at check-out together with the room, or per serving at the counter.</li>
-    </ul>
-    <h2>Or make it yourself</h2>
-    <p>The shared kitchen on the ground floor is free to use and has a hob, microwave, a refrigerator with built-in ice maker, an espresso machine and a drip coffee maker. Coffee, tea and drinking water are free for all guests, around the clock. Groceries come from the market or Gaisano Grand in Moalboal town, 10 minutes away by scooter.</p>
+    <ol class="checks">
+      <li>Say what you want at the counter the evening before, or send a message on WhatsApp or Messenger.</li>
+      <li>Name a time between 6:00 and 10:00 AM, and whether it should be in the suite or at the table downstairs.</li>
+      <li>Pay at check-out, together with the room and anything else booked at the counter.</li>
+    </ol>
+    <p>Guests leaving before six for Oslob or canyoneering can ask for a packed breakfast to take along instead.</p>
   </div>
-  <div class="intro-imgs">{img("living-room-2", "Dining table on the ground floor where breakfast is served at OIA Suites Moalboal")}{img("balcony-chairs", "Balcony with two chairs where breakfast can be served in the suite")}</div>
+  <div class="intro-imgs">
+    {img("breakfast-american", "American breakfast at OIA Suites Moalboal: bacon, scrambled eggs, whole-wheat toast, mango, jam and coffee")}
+    {img("breakfast-bacsilog", "Bacsilog breakfast at OIA Suites Moalboal: bacon, garlic rice, fried eggs, banana, coffee and juice")}
+  </div>
 </section>
 
-<section class="wrap cta-box"><h2>Book a suite and add breakfast on arrival</h2><p>Pick dates in the calendar. Breakfast does not have to be arranged in advance; ordering it on the first evening is enough.</p><a class="btn btn-primary btn-lg" href="/availability/">Check availability</a></section>
+<section class="wrap">
+  <div class="section-head"><h2>Filipino sets</h2><p>The classic silog: a protein, garlic or plain rice and eggs, named after the rice (sinangag) and the egg (itlog). PHP 250 per serving, with coffee, juice and fruit.</p></div>
+  <div class="grid-3 fact-cards">{set_cards}</div>
+</section>
+
+<section class="wrap two-col">
+  <div>
+    <h2>American set</h2>
+    <p>Bacon, whole-wheat bread, omelette, marmalade and butter, PHP 250 per serving with coffee, juice and fruit. The set for guests who would rather not start the day with rice.</p>
+    <h2>By pre-order</h2>
+    <p>Tortang talong, the Filipino eggplant omelette, and chicken tinola, a clear ginger soup, are cooked on request at the same PHP 250 per serving. These need a day's notice because the ingredients are bought fresh at the market in Moalboal town. Anything else is worth asking about; extras are charged separately.</p>
+    <h2>Coffee at any hour</h2>
+    <p>Breakfast stops at ten, coffee does not. The shared kitchen has an espresso machine and a drip coffee maker, free to use around the clock, along with a refrigerator that makes crushed ice for the walk to the beach. The <a href="/faq/">FAQ</a> covers the rest of the house.</p>
+  </div>
+  <div>
+    {img("breakfast-tray", "Breakfast tray with tocino, garlic rice, scrambled eggs, fresh mango, black coffee and iced juice at OIA Suites Moalboal")}
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>Where to eat the rest of the day</h2>
+  <p>Lunch and dinner are outside the house. Panagsama Beach is 13 minutes on foot or 5 minutes by scooter and has everything from Filipino carinderias to Italian and Greek kitchens; Moalboal town, 10 minutes by scooter, has the public market and the cheaper local places. The shared kitchen and the outdoor grill are free to use for guests who would rather cook, and a scooter can be rented at the counter from PHP 300 a day. Prices for scooters, tours and transfers are on the <a href="/services/">services page</a>.</p>
+</section>
+
+<section class="wrap cta-box">
+  <h2>Book a suite, order breakfast on arrival</h2>
+  <p>Pick dates in the calendar. Breakfast does not need to be booked in advance; the team takes the order at the counter during the stay.</p>
+  <a class="btn btn-primary btn-lg" href="/availability/">Check availability</a>
+</section>
 """
-    write(path, layout(path, f"Breakfast: Filipino and American sets, {BREAKFAST_PRICE} | OIA Suites Moalboal",
-        f"Breakfast at OIA Suites Moalboal: tosilog, bacsilog, longsilog, hotsilog, cornsilog or an American set, {BREAKFAST_PRICE} per serving with {BREAKFAST_INCLUDED}, served {BREAKFAST_HOURS} in the dining room or on the balcony.",
-        body, schemas=[menu, offer], og_image=og, crumbs=[("/", "Home"), (path, "Breakfast")]))
+    write(path, layout(path, "Breakfast in Moalboal: Filipino and American sets, PHP 250 | OIA Suites",
+        "Breakfast to order at OIA Suites Moalboal: tosilog, hotsilog, longsilog, bacsilog, cornsilog or an American set, PHP 250 per serving with coffee, juice and fruit, served 6:00 to 10:00 AM.",
+        body, schemas=[webpage, menu], og_image="/images/breakfast-tosilog.webp", crumbs=[("/", "Home"), (path, "Breakfast")]))
 
 def page_faq():
     path = "/faq/"
@@ -655,24 +689,14 @@ def page_404():
     write("/404.html", html_)
 
 def sitemap():
-    urls = ["/", "/rooms/", "/availability/", "/accommodation-for-digital-nomads/", "/breakfast/", "/services/", "/laundry-moalboal/", "/faq/", "/contact/"] + [f"/rooms/{r['slug']}/" for r in ROOMS]
+    urls = ["/", "/rooms/", "/availability/", "/accommodation-for-digital-nomads/", "/services/", "/breakfast/", "/laundry-moalboal/", "/faq/", "/contact/"] + [f"/rooms/{r['slug']}/" for r in ROOMS]
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(
         f"  <url><loc>{BASE}{u}</loc><lastmod>{TODAY}</lastmod></url>\n" for u in urls) + "</urlset>\n"
     write("/sitemap.xml", xml)
+    faq_json = [{"q": q, "a": a, "topic": cat} for cat, items in FAQ for q, a in items]
+    write("/data/faq.json", json.dumps(faq_json, ensure_ascii=False))
     write("/robots.txt", f"User-agent: *\nAllow: /\nDisallow: /request-sent/\n\nSitemap: {BASE}/sitemap.xml\n")
     write("/_headers", "/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  X-Frame-Options: SAMEORIGIN\n/images/*\n  Cache-Control: public, max-age=31536000, immutable\n/assets/*\n  Cache-Control: public, max-age=86400\n/data/*\n  Cache-Control: no-cache\n")
-
-def faq_json():
-    """The FAQ as JSON for Iris (assets/iris.js), so the widget and the FAQ page can never disagree."""
-    import re
-    items = []
-    for cat, qas in FAQ:
-        for q, a in qas:
-            items.append({"category": cat, "question": q, "answer": a, "answer_text": re.sub("<[^>]+>", "", a), "url": "/faq/"})
-    p = os.path.join(OUT, "data", "faq.json")
-    os.makedirs(os.path.dirname(p), exist_ok=True)
-    with open(p, "w", encoding="utf-8") as f:
-        json.dump({"updated": TODAY, "items": items}, f, ensure_ascii=False, indent=1)
 
 def availability_seed():
     p = os.path.join(OUT, "data", "availability.json")
@@ -683,14 +707,14 @@ def availability_seed():
     json.dump(data, open(p, "w"), indent=1)
 
 def main():
-    for d in ["rooms", "availability", "accommodation-for-digital-nomads", "breakfast", "services", "laundry-moalboal", "faq", "contact", "request-sent"]:
+    for d in ["rooms", "availability", "accommodation-for-digital-nomads", "services", "breakfast", "laundry-moalboal", "faq", "contact", "request-sent"]:
         shutil.rmtree(os.path.join(OUT, d), ignore_errors=True)
     os.makedirs(os.path.join(OUT, "assets"), exist_ok=True)
     for a in ["style.css", "site.js", "calendar.js", "iris.js"]:
         shutil.copy(os.path.join(os.path.dirname(__file__), "assets", a), os.path.join(OUT, "assets", a))
     page_home(); page_rooms()
     for r in ROOMS: page_room(r)
-    page_availability(); page_nomads(); page_breakfast(); page_services(); page_laundry(); page_faq(); page_contact(); page_sent(); page_404(); sitemap(); faq_json(); availability_seed()
+    page_availability(); page_nomads(); page_services(); page_breakfast(); page_laundry(); page_faq(); page_contact(); page_sent(); page_404(); sitemap(); availability_seed()
     print("built", TODAY)
 
 if __name__ == "__main__":
