@@ -1,5 +1,5 @@
 {
- "updated": "2026-09-16",
+ "updated": "2026-09-26",
  "items": [
   {
    "category": "Booking and payment",
@@ -37,10 +37,24 @@
    "url": "/faq/"
   },
   {
+   "category": "Booking and payment",
+   "question": "Is a deposit needed for a direct booking?",
+   "answer": "A request through this website costs nothing and needs no deposit. When OIA Suites confirms the request, the confirmation message states whether a deposit is needed, the amount, how to pay it and until when cancellation is free. Nothing is charged before that confirmation.",
+   "answer_text": "A request through this website costs nothing and needs no deposit. When OIA Suites confirms the request, the confirmation message states whether a deposit is needed, the amount, how to pay it and until when cancellation is free. Nothing is charged before that confirmation.",
+   "url": "/faq/"
+  },
+  {
    "category": "Check-in and house rules",
    "question": "What are the check-in and check-out times?",
    "answer": "Check-in is from 1:00 PM, check-out until 12:00 noon. Late arrivals until 11:00 PM are fine when announced in advance; a family member is reachable from 8:00 PM to 8:00 AM. Luggage can be stored before check-in and after check-out.",
    "answer_text": "Check-in is from 1:00 PM, check-out until 12:00 noon. Late arrivals until 11:00 PM are fine when announced in advance; a family member is reachable from 8:00 PM to 8:00 AM. Luggage can be stored before check-in and after check-out.",
+   "url": "/faq/"
+  },
+  {
+   "category": "Check-in and house rules",
+   "question": "Is early check-in or late check-out possible?",
+   "answer": "Yes, when the suite is free. Ask in advance by message; the team confirms on the day, once it is clear whether the room is needed for another guest. When the room is not free, luggage can be stored before check-in and after check-out.",
+   "answer_text": "Yes, when the suite is free. Ask in advance by message; the team confirms on the day, once it is clear whether the room is needed for another guest. When the room is not free, luggage can be stored before check-in and after check-out.",
    "url": "/faq/"
   },
   {
@@ -136,6 +150,13 @@
   },
   {
    "category": "Rooms and facilities",
+   "question": "Are beach towels available?",
+   "answer": "Yes. Beach towels are provided free of charge on request. Ask at the counter or send a message before heading to the beach.",
+   "answer_text": "Yes. Beach towels are provided free of charge on request. Ask at the counter or send a message before heading to the beach.",
+   "url": "/faq/"
+  },
+  {
+   "category": "Rooms and facilities",
    "question": "Is there parking?",
    "answer": "Yes, free private parking on the premises for cars and motorbikes.",
    "answer_text": "Yes, free private parking on the premises for cars and motorbikes.",
@@ -153,6 +174,13 @@
    "question": "Is laundry service available?",
    "answer": "Yes. OIA Suites runs its own laundry, Laundry Lounge Cebu in Moalboal town. Laundry is collected at the house and returned the next day, washed, dried and folded, for PHP 190 per load of up to 9 kg. See the <a href=\"/laundry-moalboal/\">laundry page</a>.",
    "answer_text": "Yes. OIA Suites runs its own laundry, Laundry Lounge Cebu in Moalboal town. Laundry is collected at the house and returned the next day, washed, dried and folded, for PHP 190 per load of up to 9 kg. See the laundry page.",
+   "url": "/faq/"
+  },
+  {
+   "category": "Rooms and facilities",
+   "question": "Can laundry be done the same day?",
+   "answer": "Usually, yes. Laundry Lounge Cebu is open daily from 8:00 AM to 8:00 PM and a load dropped off in the morning is often ready the same afternoon. When laundry is needed the same day, mention it when handing it in at the counter.",
+   "answer_text": "Usually, yes. Laundry Lounge Cebu is open daily from 8:00 AM to 8:00 PM and a load dropped off in the morning is often ready the same afternoon. When laundry is needed the same day, mention it when handing it in at the counter.",
    "url": "/faq/"
   },
   {
@@ -181,6 +209,20 @@
    "question": "Is there free pick-up?",
    "answer": "Yes. Free pick-up from Jollibee Moalboal or the Moalboal bus stop at check-in. Send a message with the arrival time.",
    "answer_text": "Yes. Free pick-up from Jollibee Moalboal or the Moalboal bus stop at check-in. Send a message with the arrival time.",
+   "url": "/faq/"
+  },
+  {
+   "category": "Location and getting around",
+   "question": "Where is the nearest ATM?",
+   "answer": "Panagsama Beach has a PNB ATM near Eve's Kiosk, about 13 minutes on foot. Moalboal town, 10 minutes by scooter, has Metrobank, PNB, BDO and Landbank ATMs at Gaisano Grand, Gaisano Town Center and the Municipal Hall. Most machines charge around PHP 250 for foreign cards and can run low on cash at weekends, so withdrawing in Cebu City before the trip is wise. Card payment is accepted at OIA Suites.",
+   "answer_text": "Panagsama Beach has a PNB ATM near Eve's Kiosk, about 13 minutes on foot. Moalboal town, 10 minutes by scooter, has Metrobank, PNB, BDO and Landbank ATMs at Gaisano Grand, Gaisano Town Center and the Municipal Hall. Most machines charge around PHP 250 for foreign cards and can run low on cash at weekends, so withdrawing in Cebu City before the trip is wise. Card payment is accepted at OIA Suites.",
+   "url": "/faq/"
+  },
+  {
+   "category": "Location and getting around",
+   "question": "Where can I buy a local SIM card?",
+   "answer": "Globe and Smart SIM cards are sold at Mactan-Cebu International Airport on arrival and in shops in Moalboal town. Every suite has fast wifi, so a SIM is only needed for data on the road.",
+   "answer_text": "Globe and Smart SIM cards are sold at Mactan-Cebu International Airport on arrival and in shops in Moalboal town. Every suite has fast wifi, so a SIM is only needed for data on the road.",
    "url": "/faq/"
   },
   {
