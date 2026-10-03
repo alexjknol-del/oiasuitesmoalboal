@@ -4,7 +4,7 @@
  * - /data/availability.json is generated live from the iCal feeds of the
  *   booking platforms when the secret ICAL_FEEDS is set:
  *     {"suite-1":["https://...ics", ...], "suite-2":[...], ...}
- *   Extra secrets ICAL_FEEDS_BOOKING and ICAL_FEEDS_EXTRA use the same format and are merged.
+ *   Extra secrets ICAL_FEEDS_BOOKING, ICAL_FEEDS_EXTRA and ICAL_FEEDS_EXPEDIA use the same format and are merged.
  *   Result is cached for 30 minutes. Without any secret the static file is served.
  */
 const CANONICAL_HOST = "oiasuitesmoalboal.com";
@@ -47,7 +47,7 @@ export default {
 async function buildAvailability(env, origin) {
   // Feeds come from one or more secrets (ICAL_FEEDS = Airbnb, ICAL_FEEDS_BOOKING = Booking.com, ...); merged per room
   const feeds = {};
-  for (const name of ["ICAL_FEEDS", "ICAL_FEEDS_BOOKING", "ICAL_FEEDS_EXTRA"]) {
+  for (const name of ["ICAL_FEEDS", "ICAL_FEEDS_BOOKING", "ICAL_FEEDS_EXTRA", "ICAL_FEEDS_EXPEDIA"]) {
     if (!env[name]) continue;
     try {
       const part = JSON.parse(env[name]);
