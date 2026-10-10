@@ -347,7 +347,7 @@ def page_availability():
       <label>Check-in<input type="date" name="Check-in" id="f-checkin" required></label>
       <label>Check-out<input type="date" name="Check-out" id="f-checkout" required></label>
       <label>Full name<input type="text" name="Name" required autocomplete="name"></label>
-      <label>E-mail<input type="email" name="_replyto" required autocomplete="email"></label>
+      <label>E-mail<input type="email" name="email" required autocomplete="email"></label>
       <label>WhatsApp or phone (optional)<input type="tel" name="Phone" autocomplete="tel"></label>
       <label>Arrival time and transport (optional)<input type="text" name="Arrival" placeholder="e.g. Ceres bus, arriving around 4 PM"></label>
     </div>
